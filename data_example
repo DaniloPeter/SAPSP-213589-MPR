@@ -1,0 +1,18 @@
+<entry xmlns="http://www.w3.org/2005/Atom"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:d="http://schemas.microsoft.com/ado/2007/08/dataservices"
+    xml:base="https://sgzswd01.segezha-group.com:44310/sap/opu/odata/sap/Z_MM211_PREQ_MON_SRV/">
+    <id>
+        https://sgzswd01.segezha-group.com:44310/sap/opu/odata/sap/Z_MM211_PREQ_MON_SRV/VHIncotermsSet('CFR')</id>
+    <title type="text">VHIncotermsSet('CFR')</title>
+    <updated>2025-08-19T10:26:23Z</updated>
+    <category term="Z_MM211_PREQ_MON_SRV.VHIncoterms"
+        scheme="http://schemas.microsoft.com/ado/2007/08/dataservices/scheme" />
+    <link href="VHIncotermsSet('CFR')" rel="self" title="VHIncoterms" />
+    <content type="application/xml">
+        <m:properties>
+            <d:ID>CFR</d:ID>
+            <d:Text>Затраты и фрахт</d:Text>
+        </m:properties>
+    </content>
+</entry>

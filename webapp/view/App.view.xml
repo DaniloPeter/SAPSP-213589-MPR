@@ -1,0 +1,9 @@
+<mvc:View
+    controllerName="com.segezha.form.mpr.controller.App"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+>
+    <App id="app" />
+</mvc:View>

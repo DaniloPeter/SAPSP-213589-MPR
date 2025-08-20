@@ -1,0 +1,463 @@
+<mvc:View
+    controllerName="com.segezha.form.mpr.controller.Home"
+    xmlns="sap.m"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form"
+    displayBlock="true">
+    <Page id="homePageId">
+        <customHeader>
+            <Toolbar>
+                <ToolbarSpacer />
+                <Title text="Создание заявки на запрос полномочий" />
+                <ToolbarSpacer />
+            </Toolbar>
+        </customHeader>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <HBox class="sapUiSmallMarginBottom">
+                    <VBox
+                        class="sapUiFormResGrid sapUiFormBackgrTranslucent sapUiSmallMarginEnd"
+                        width="40%">
+                        <HBox height="40px" justifyContent="SpaceBetween" alignItems="Center">
+                            <Label text="Помощь" />
+                            <Input
+                                value="{
+                                    parts: [
+                                        {path: 'incoterms>/ID'},
+                                        {value: 'ID'}
+                                    ],
+                                    formatter: '.formatter.formatText'
+                                }"
+                                enabled="false"
+                                placeholder="Incoterms Description" />
+
+                            <Input
+                                value="{incoterms>/ID}"
+                                enabled="false"
+                                placeholder="Incoterms ID" />
+
+                            <!-- Для отображения данных Payment Terms -->
+                            <Input
+                                value="{payment>/Text}"
+                                enabled="false"
+                                placeholder="Payment Terms Description" />
+
+                            <Input
+                                value="{payment>/ID}"
+                                enabled="false"
+                                placeholder="Payment Terms ID" />
+                        </HBox>
+                        <HBox justifyContent="Start" alignItems="Center">
+                            <!-- N° Заявки -->
+                            <VBox class="">
+                                <Label text="N° Заявки на полномочия" required="false" />
+                                <Input
+                                    value="{payment>Text}"
+                                    enabled="false"
+                                    placeholder="N° Заявки на полномочия" />
+                            </VBox>
+                            <!-- Статус -->
+                            <VBox class=" sapUiSmallMarginBegin">
+                                <Label text="Статус" required="false" />
+                                <Input
+                                    value="{
+                                        parts: [
+                                            {path: 'Text'},
+                                            {value: 'Text'}
+                                        ],
+                                        formatter: '.formatter.formatText'
+                                    }"
+                                    enabled="false"
+                                    placeholder="Автор заявки" />
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="Start" alignItems="End">
+
+                            <!-- Автор заявки -->
+                            <VBox class="" width="40%">
+                                <Label text="Автор заявки" required="false" />
+                                <Input
+                                    value="{
+                                        parts: [
+                                            {path: 'ID'},
+                                            {value: 'ID'}
+                                        ],
+                                        formatter: '.formatter.formatText'
+                                    }"
+                                    enabled="false"
+                                    placeholder="Автор заявки" />
+                            </VBox>
+                            <VBox class=" sapUiSmallMarginBegin" width="60%">
+                                <Input
+                                    value="{incoterm>Text}"
+                                    enabled="false"
+                                    placeholder="Автор заявки" />
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="Start" alignItems="End">
+
+                            <!-- Тип пользователя -->
+                            <VBox class="">
+                                <Label text="Тип пользователя" required="false" />
+                                <RadioButtonGroup
+                                    id="userTypeGroup"
+                                    columns="2">
+                                    <RadioButton text="Существующий пользователь" />
+                                    <RadioButton text="Новый пользователь" />
+                                </RadioButtonGroup>
+                            </VBox>
+                        </HBox>
+                        <!-- Организация  -->
+                        <HBox justifyContent="Start" alignItems="End">
+                            <VBox class="">
+                                <Label text="Организация" required="false" />
+                                <HBox class="">
+                                    <Input
+                                        value="{selectedData>/selectedIncotermId}"
+                                        placeholder="Организация" />
+                                    <Button
+                                        icon="sap-icon://search"
+                                        press="onSearchOrganization" />
+                                </HBox>
+                            </VBox>
+                            <VBox class="sapUiSmallMarginBegin" width="90%">
+                                <Input
+                                    value="{selectedData>/selectedIncotermText}"
+                                    placeholder="Организация"
+                                    enabled="false" />
+                            </VBox>
+                        </HBox>
+                        <!-- Завод -->
+                        <HBox justifyContent="Start" alignItems="End">
+                            <VBox class="">
+                                <Label text="Завод" required="false" />
+                                <HBox>
+                                    <Input
+                                        value="{model>plant}"
+                                        placeholder="Завод" />
+                                    <Button
+                                        icon="sap-icon://search"
+                                        press="onSearchPlant" />
+                                </HBox>
+                            </VBox>
+                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                                <Input
+                                    value="{model>plant}"
+                                    placeholder="Завод"
+                                    enabled="false" />
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="Start" alignItems="End">
+
+                            <!-- Период -->
+                            <VBox class="" width="100%">
+                                <Label text="Период" required="false" />
+                                <DateRangeSelection
+                                    displayFormat="dd.MM.yyyy"
+                                    class="" />
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="Start" alignItems="End">
+
+                            <!-- Пользователь -->
+                            <VBox class="sapUiSmallMarginTop">
+                                <Label text="Пользователь" required="false" />
+                                <HBox>
+                                    <Input
+                                        value="{model>user}"
+                                        placeholder="Пользователь" />
+                                    <Button
+                                        icon="sap-icon://search"
+                                        press="onSearchUser" />
+                                </HBox>
+                            </VBox>
+                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                                <Input
+                                    value="{model>user}"
+                                    placeholder="Пользователь"
+                                    enabled="false" />
+                            </VBox>
+                        </HBox>
+
+                        <!-- Фамилия -->
+                        <VBox class="">
+                            <Label text="Фамилия" required="false" />
+                            <Input
+                                value="{model>lastName}"
+                                enabled="false"
+                                placeholder="Фамилия" />
+                        </VBox>
+
+                        <!-- Имя -->
+                        <VBox class="">
+                            <Label text="Имя" required="false" />
+                            <Input
+                                value="{model>firstName}"
+                                enabled="false"
+                                placeholder="Имя" />
+                        </VBox>
+
+                        <!-- Отчество -->
+                        <VBox class="">
+                            <Label text="Отчество" required="false" />
+                            <Input
+                                value="{model>middleName}"
+                                enabled="false"
+                                placeholder="Отчество" />
+                        </VBox>
+
+                        <!-- Отдел -->
+                        <VBox class="">
+                            <Label text="Отдел" required="false" />
+                            <Input
+                                value="{model>department}"
+                                enabled="false"
+                                placeholder="Отдел" />
+                        </VBox>
+
+                        <!-- Должность -->
+                        <VBox class="">
+                            <Label text="Должность" required="false" />
+                            <Input
+                                value="{model>position}"
+                                enabled="false"
+                                placeholder="Должность" />
+                        </VBox>
+
+                        <!-- Адрес эл. почты -->
+                        <VBox class="">
+                            <Label text="Адрес эл. почты" required="false" />
+                            <Input
+                                value="{model>email}"
+                                type="Email"
+                                enabled="false"
+                                placeholder="Адрес эл. почты" />
+                        </VBox>
+                        <!-- Руководитель -->
+                        <HBox justifyContent="Start" alignItems="End">
+                            <VBox class="">
+                                <Label text="Руководитель" required="false" />
+                                <HBox>
+                                    <Input
+                                        value="{model>manager}"
+                                        placeholder="Руководитель" />
+                                    <Button
+                                        icon="sap-icon://search"
+                                        press="onSearchManager" />
+                                </HBox>
+                            </VBox>
+                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                                <Input
+                                    value="{model>manager}"
+                                    placeholder="Руководитель"
+                                    enabled="false" />
+                            </VBox>
+                        </HBox>
+                        <HBox justifyContent="Start" alignItems="End">
+
+                            <!-- Скопировать с -->
+                            <VBox class="sapUiSmallMarginTop">
+                                <Label text="Скопировать с" required="false" />
+                                <HBox>
+
+                                    <Input
+                                        value="{model>copyFrom}"
+                                        placeholder="Скопировать с" />
+                                    <Button
+                                        icon="sap-icon://search"
+                                        press="onSearchcopyFrom" />
+                                </HBox>
+                            </VBox>
+                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                                <Input
+                                    value="{model>copyFrom}"
+                                    placeholder="Скопировать с"
+                                    enabled="false" />
+                            </VBox>
+                        </HBox>
+                        <!-- Кнопка "Скопировать полномочия" -->
+                        <Button
+                            text="Скопировать полномочия"
+                            press="onCopyPowerOfAttorney"
+                            width="200px"
+                            class="sapUiSmallMarginTop" />
+                    </VBox>
+                    <VBox class="sapUiFormResGrid sapUiFormBackgrTranslucent" width="60%">
+                        <Table items="{state>/approval/items}"
+                            mode="None">
+                            <headerToolbar>
+                                <OverflowToolbar>
+                                    <content>
+                                        <Title text="Согласование" level="H3" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            icon="sap-icon://delete"
+                                            enabled="{data>/table}"
+                                            press="onRemoveRow($event, 'table')" />
+                                    </content>
+                                </OverflowToolbar>
+                            </headerToolbar>
+                            <columns>
+                                <!-- Полное имя -->
+                                <Column>
+                                    <Label text="Полное имя" />
+                                </Column>
+
+                                <!-- Руководитель -->
+                                <Column>
+                                    <Label text="Руков" />
+                                </Column>
+
+                                <!-- Согласование -->
+                                <Column>
+                                    <Label text="Согласование" />
+                                </Column>
+
+                                <!-- Комментарий -->
+                                <Column>
+                                    <Label text="Комментарий" />
+                                </Column>
+
+                                <!-- Тип согласования -->
+                                <Column>
+                                    <Label text="ТипСоглас" />
+
+                                </Column>
+
+                                <!-- Функциональное направление -->
+                                <Column>
+                                    <Label text="ФункНапр" />
+
+                                </Column>
+
+                                <!-- БЕ (Бизнес-единица) -->
+                                <Column>
+                                    <Label text="БЕ" />
+                                </Column>
+
+                                <!-- Завод -->
+                                <Column>
+                                    <Label text="Завод" />
+                                </Column>
+
+                                <!-- БизнесРоль -->
+                                <Column>
+                                    <Label text="БизнесРоль" />
+                                </Column>
+
+                                <!-- Дата и время -->
+                                <Column>
+                                    <Label text="Дата Время" />
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <Input />
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                </HBox>
+                <VBox class="sapUiSmallMarginBottom sapUiFormResGrid sapUiFormBackgrTranslucent">
+                    <Table items="{state>/tables/defect/items}"
+                        mode="MultiSelect">
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <content>
+                                    <Title text="Запрос полномочий" />
+
+                                </content>
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <!-- Идентификатор -->
+                            <Column>
+                                <Label text="Ид." />
+
+                            </Column>
+
+                            <!-- Начало -->
+                            <Column>
+                                <Label text="Начало" required="true" />
+                            </Column>
+
+                            <!-- Конец -->
+                            <Column>
+                                <Label text="Конец" required="true" />
+                            </Column>
+
+                            <!-- Функциональное направление -->
+                            <Column>
+                                <Label text="ФункНапр" />
+                            </Column>
+
+                            <!-- Наименование -->
+                            <Column>
+                                <Label text="Наименован" />
+                            </Column>
+
+                            <!-- БизнесРоль (код) -->
+                            <Column>
+                                <Label text="БизнесРоль" />
+
+                            </Column>
+
+                            <!-- Наименование бизнес-роли -->
+                            <Column>
+                                <Label text="НаименовБР" />
+
+                            </Column>
+
+                            <!-- 3-д. Имя 1 -->
+                            <Column>
+                                <Label text="3-д. Имя 1" />
+
+                            </Column>
+
+                            <!-- TkN -->
+                            <Column>
+                                <Label text="TkN" />
+
+                            </Column>
+
+                            <!-- Назв. -->
+                            <Column>
+                                <Label text="Назв." />
+
+                            </Column>
+
+                            <!-- ПравнРаспр -->
+                            <Column>
+                                <Label text="ПравнРаспр" />
+
+                            </Column>
+
+                            <!-- НаимПра -->
+                            <Column>
+                                <Label text="НаимПра" />
+
+                            </Column>
+
+                            <!-- Пользов. -->
+                            <Column>
+                                <Label text="Пользов." />
+
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </VBox>
+            </VBox>
+        </content>
+        <footer>
+            <Toolbar>
+
+            </Toolbar>
+        </footer>
+    </Page>
+</mvc:View>

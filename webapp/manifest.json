@@ -1,0 +1,120 @@
+{
+  "_version": "1.58.0",
+  "sap.app": {
+    "id": "com.segezha.form.mpr",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "title": "Плитка МПР для создания заявки на получение полномочий",
+    "applicationVersion": {
+      "version": "1.0.0"
+    },
+    "dataSources": {
+      "odata": {
+        "uri": "/sap/opu/odata/sap/Z_MM211_PREQ_MON_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0",
+          "defaultCountMode": "InlineRepeat",
+          "useBatch": true
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "com.segezha.form.mpr.view.App",
+      "type": "XML",
+      "async": true
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "path": "com.segezha.form.mpr.view",
+        "controlId": "app",
+        "controlAggregation": "pages",
+        "type": "View",
+        "viewType": "XML",
+        "async": true
+      },
+      "routes": [
+        {
+          "pattern": "",
+          "name": "home",
+          "target": "home"
+        }
+      ],
+      "targets": {
+        "home": {
+          "name": "Home"
+        }
+      }
+    },
+    "dependencies": {
+      "minUI5Version": "1.74.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.ui.comp": {},
+        "sap.m": {},
+        "sap.f": {}
+      }
+    },
+    "contentDensities": {
+      "cozy": true,
+      "compact": false
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.segezha.form.mpr.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "odata",
+        "preload": true,
+        "settings": {
+          "odataVersion": "2.0",
+          "defaultBindingMode": "TwoWay",
+          "defaultCountMode": "InlineRepeat",
+          "useBatch": true,
+          "headers": {
+            "Accept": "application/json"
+          }
+        }
+      },
+      "incoterms": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "payment": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "gp": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
+      "selectedData": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "defaultValue": {
+            "selectedIncotermId": "",
+            "selectedIncotermText": ""
+          }
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    }
+  }
+}
