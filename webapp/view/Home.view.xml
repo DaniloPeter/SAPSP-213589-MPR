@@ -295,20 +295,17 @@
                                         <ToolbarSpacer />
                                         <Button
                                             icon="sap-icon://add"
-                                            text="Добавить"
                                             press="onAddPurchaser"
                                             type="Transparent" />
                                         <Button
-                                            icon="sap-icon://send"
-                                            text="Отправить"
-                                            press="onSendPurchaser"
-                                            type="Emphasized" />
-                                        <Button
                                             icon="sap-icon://delete"
-                                            text="Удалить"
                                             enabled="{data>/hasSelectedRows}"
                                             press="onRemovePurchaser"
                                             type="Transparent" />
+                                        <Button
+                                            icon="sap-icon://back-to-top"
+                                            press="onSendPurchaser"
+                                            type="Emphasized" />
                                     </content>
                                 </OverflowToolbar>
                             </headerToolbar>
@@ -348,16 +345,26 @@
                                     <cells>
                                         <Input value="{data>ID}" />
                                         <Input value="{data>Text}" />
-                                        <Input
+                                        <DatePicker
                                             value="{
-                                                path: 'data>DateFrom',
-                                                formatter: '.formatter.formatDate'
-                                            }" />
-                                        <Input
+                                                'path':'data>DateFrom',
+                                                'type':'sap.ui.model.type.Date',
+                                                'formatOptions': {
+                                                    'pattern': 'dd.MM.yyyy'
+                                                }
+                                            }"
+                                            change=".onDateFromChange"
+                                            valueFormat="yyyy-MM-dd" />
+                                        <DatePicker
                                             value="{
-                                                path: 'data>DateTo',
-                                                formatter: '.formatter.formatDate'
-                                            }" />
+                                                'path':'data>DateTo',
+                                                'type':'sap.ui.model.type.Date',
+                                                'formatOptions': {
+                                                    'pattern': 'dd.MM.yyyy'
+                                                }
+                                            }"
+                                            change=".onDateFromChange"
+                                            valueFormat="yyyy-MM-dd" />
                                         <Input value="{data>Ekorg}" />
                                         <Input value="{data>Ekotx}" />
                                     </cells>

@@ -30,54 +30,41 @@ sap.ui.define(
 
       async loadAllData() {
         const dataConfigs = [
-          {
-            entitySet: "/VHIncotermsSet",
-            modelName: "incoterms",
-          },
+          { entitySet: "/VHIncotermsSet", modelName: "incoterms" },
           { entitySet: "/GPSet", modelName: "gp" },
-          {
-            entitySet: "/VHPurchaserSet",
-            modelName: "purchaser",
-          },
-          {
-            entitySet: "/VHPaymentTermsSet",
-            modelName: "payment",
-          },
+          { entitySet: "/VHPurchaserSet", modelName: "purchaser" },
+          { entitySet: "/VHPaymentTermsSet", modelName: "payment" },
         ];
 
         try {
           const promises = dataConfigs.map((config) =>
-            this.loadData(config.entitySet)
+            this.readOData(config.entitySet)
           );
 
           const results = await Promise.all(promises);
 
           results.forEach((data, index) => {
-            this.updateModel(dataConfigs[index].modelName, data);
+            const model = this.getModel(dataConfigs[index].modelName);
+            if (model) {
+              model.setData(data);
+            }
           });
 
-          // Инициализируем модель данных для формы
-          this.initDataModel();
+          if (!this.getModel("data")) {
+            const oDataModel = new sap.ui.model.json.JSONModel({
+              userType: 0,
+              selectedIncotermId: "",
+              selectedIncotermText: "",
+              lastName: "",
+              purchaserData: [],
+            });
+            this.getView().setModel(oDataModel, "data");
+          }
+
+          this.initPurchaserTable();
         } catch (oError) {
           console.error("Error loading data", oError);
         }
-      },
-
-      initDataModel() {
-        // Создаем модель данных для формы если она не существует
-        if (!this.getModel("data")) {
-          const oDataModel = new sap.ui.model.json.JSONModel({
-            userType: 0,
-            selectedIncotermId: "",
-            selectedIncotermText: "",
-            lastName: "",
-            purchaserData: [],
-          });
-          this.getView().setModel(oDataModel, "data");
-        }
-
-        // Инициализируем данные purchaser в таблицу согласования
-        this.initPurchaserTable();
       },
 
       initPurchaserTable() {
@@ -85,36 +72,9 @@ sap.ui.define(
         if (purchaserModel && purchaserModel.getData()) {
           const purchaserData = purchaserModel.getData().results || [];
 
-          // Логируем структуру данных для отладки
-          if (purchaserData.length > 0) {
-            console.log("Purchaser data structure:", purchaserData[0]);
-            console.log("DateFrom type:", typeof purchaserData[0].DateFrom);
-            console.log("DateFrom value:", purchaserData[0].DateFrom);
-            console.log("DateTo type:", typeof purchaserData[0].DateTo);
-            console.log("DateTo value:", purchaserData[0].DateTo);
-          }
-
           const dataModel = this.getModel("data");
-
           if (dataModel) {
             dataModel.setProperty("/purchaserData", purchaserData);
-          }
-        }
-      },
-
-      loadData(entitySet) {
-        return this.readOData(entitySet);
-      },
-
-      updateModel(modelName, data) {
-        const model = this.getModel(modelName);
-        if (model) {
-          model.setData(data);
-          // console.log(modelName, data);
-
-          // Если обновилась модель purchaser, обновляем таблицу
-          if (modelName === "purchaser") {
-            this.initPurchaserTable();
           }
         }
       },
@@ -128,15 +88,13 @@ sap.ui.define(
           this.getView().addDependent(this._oIncotermsDialog);
         }
 
-        // Устанавливаем модель с данными
-        var aIncoterms = this.getModel("incoterms").getData().results || [];
-        var oModel = new sap.ui.model.json.JSONModel(aIncoterms);
+        var oIncotermsModel = this.getModel("incoterms");
+        var aIncoterms = oIncotermsModel.getData().results || [];
 
         this._oIncotermsDialog.getTableAsync().then(
           function (oTable) {
-            oTable.setModel(oModel);
+            oTable.setModel(oIncotermsModel);
 
-            // Очищаем существующие столбцы перед добавлением новых
             if (oTable.getColumns) {
               var aColumns = oTable.getColumns();
               for (var i = aColumns.length - 1; i >= 0; i--) {
@@ -145,9 +103,7 @@ sap.ui.define(
               }
             }
 
-            // Для desktop таблицы (sap.ui.table.Table)
             if (oTable.bindRows) {
-              // Добавляем колонки
               var oColumnID = new UIColumn({
                 label: new Label({ text: "Код" }),
                 template: new Text({ wrapping: false, text: "{ID}" }),
@@ -162,9 +118,8 @@ sap.ui.define(
               oColumnText.data({ fieldName: "Text" });
               oTable.addColumn(oColumnText);
 
-              // Биндим данные
               oTable.bindAggregation("rows", {
-                path: "/",
+                path: "/results",
                 events: {
                   dataReceived: function () {
                     this._oIncotermsDialog.update();
@@ -175,22 +130,19 @@ sap.ui.define(
 
             // Для mobile таблицы (sap.m.Table)
             if (oTable.bindItems) {
-              // Очищаем существующие колонки
               if (oTable.removeAllColumns) {
                 oTable.removeAllColumns();
               }
 
-              // Добавляем колонки
               oTable.addColumn(
-                new MColumn({ header: new Label({ text: "Код" }) })
+                new sap.m.Column({ header: new Label({ text: "Код" }) })
               );
               oTable.addColumn(
-                new MColumn({ header: new Label({ text: "Описание" }) })
+                new sap.m.Column({ header: new Label({ text: "Описание" }) })
               );
 
-              // Биндим данные
               oTable.bindAggregation("items", {
-                path: "/",
+                path: "/results",
                 template: new sap.m.ColumnListItem({
                   cells: [
                     new Text({ text: "{ID}" }),
@@ -300,6 +252,114 @@ sap.ui.define(
         if (oDataModel && iSelectedIndex === 0) {
           oDataModel.setProperty("/lastName", "");
         }
+      },
+
+      onAddPurchaser: function () {
+        const oDataModel = this.getModel("data");
+        if (!oDataModel) return;
+
+        const newPurchaser = {
+          ID: "NEW_" + Date.now(),
+          Text: "",
+          DateFrom: new Date(),
+          DateTo: new Date(),
+          Ekorg: "",
+          Ekotx: "",
+          isNew: true,
+          __metadata: {
+            type: "Z_MM211_PREQ_MON_SRV.VHPurchaser",
+          },
+        };
+
+        const purchaserData = oDataModel.getProperty("/purchaserData") || [];
+        purchaserData.push(newPurchaser);
+        oDataModel.setProperty("/purchaserData", purchaserData);
+
+        MessageToast.show("Новая запись добавлена");
+      },
+
+      onDateFromChange: function (oEvent) {
+        const oDatePicker = oEvent.getSource();
+        const oBindingContext = oDatePicker.getBindingContext("data");
+
+        if (oBindingContext) {
+          const sPath = oBindingContext.getPath();
+          const oDataModel = this.getModel("data");
+          const oDate = oDatePicker.getDateValue();
+
+          if (oDate && oDataModel) {
+            oDataModel.setProperty(sPath + "/DateFrom", oDate);
+          }
+        }
+      },
+
+      onDateToChange: function (oEvent) {
+        const oDatePicker = oEvent.getSource();
+        const oBindingContext = oDatePicker.getBindingContext("data");
+
+        if (oBindingContext) {
+          const sPath = oBindingContext.getPath();
+          const oDataModel = this.getModel("data");
+          const oDate = oDatePicker.getDateValue();
+
+          if (oDate && oDataModel) {
+            oDataModel.setProperty(sPath + "/DateTo", oDate);
+          }
+        }
+      },
+
+      onSendPurchaser: function () {
+        const oDataModel = this.getModel("data");
+        if (!oDataModel) return;
+
+        const purchaserData = oDataModel.getProperty("/purchaserData") || [];
+
+        if (purchaserData.length === 0) {
+          MessageBox.warning("Нет данных для отправки");
+          return;
+        }
+
+        this.sendPurchaserData(purchaserData);
+      },
+
+      async sendPurchaserData(purchaserData) {
+        try {
+          const oModel = this.getOwnerComponent().getModel();
+
+          for (const purchaser of purchaserData) {
+            if (purchaser.ID) {
+              await new Promise((resolve, reject) => {
+                oModel.update(
+                  "/VHPurchaserSet('" + purchaser.ID + "')",
+                  purchaser,
+                  {
+                    success: resolve,
+                    error: reject,
+                  }
+                );
+              });
+            } else {
+              await new Promise((resolve, reject) => {
+                oModel.create("/VHPurchaserSet", purchaser, {
+                  success: resolve,
+                  error: reject,
+                });
+              });
+            }
+          }
+
+          MessageBox.success("Данные успешно отправлены");
+          this.loadAllData();
+        } catch (oError) {
+          console.error("Error sending purchaser ", oError);
+          MessageBox.error("Ошибка при отправке данных: " + oError.message);
+        }
+      },
+
+      onRemovePurchaser: function () {
+        MessageBox.information(
+          "Функция удаления будет реализована, когда будет бекэнд :("
+        );
       },
     });
   }
