@@ -99,13 +99,13 @@
       "gp": {
         "type": "sap.ui.model.json.JSONModel"
       },
-      "selectedData": {
+      "data": {
         "type": "sap.ui.model.json.JSONModel",
         "settings": {
-          "defaultValue": {
-            "selectedIncotermId": "",
-            "selectedIncotermText": ""
-          }
+          "selectedIncotermId": "",
+          "selectedIncotermText": "",
+          "lastName": "",
+          "userType": 0
         }
       }
     },

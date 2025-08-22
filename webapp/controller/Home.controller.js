@@ -229,7 +229,7 @@ sap.ui.define(
           var sSelectedKey = oToken.getKey();
           var sSelectedText = oToken.getText();
 
-          var oSelectedModel = this.getModel("selectedData");
+          var oSelectedModel = this.getModel("data");
           if (oSelectedModel) {
             oSelectedModel.setProperty("/selectedIncotermId", sSelectedKey);
             oSelectedModel.setProperty("/selectedIncotermText", sSelectedText);
@@ -240,6 +240,15 @@ sap.ui.define(
 
       onValueHelpCancelPress: function () {
         this._oIncotermsDialog.close();
+      },
+
+      onUserTypeChange: function (oEvent) {
+        var iSelectedIndex = oEvent.getParameter("selectedIndex");
+        var oDataModel = this.getModel("data");
+
+        if (oDataModel && iSelectedIndex === 0) {
+          oDataModel.setProperty("/lastName", "");
+        }
       },
     });
   }

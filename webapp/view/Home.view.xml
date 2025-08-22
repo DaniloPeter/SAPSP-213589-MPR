@@ -102,6 +102,8 @@
                                 <Label text="Тип пользователя" required="false" />
                                 <RadioButtonGroup
                                     id="userTypeGroup"
+                                    selectedIndex="{data>/userType}"
+                                    select=".onUserTypeChange"
                                     columns="2">
                                     <RadioButton text="Существующий пользователь" />
                                     <RadioButton text="Новый пользователь" />
@@ -114,7 +116,7 @@
                                 <Label text="Организация" required="false" />
                                 <HBox class="">
                                     <Input
-                                        value="{selectedData>/selectedIncotermId}"
+                                        value="{data>/selectedIncotermId}"
                                         placeholder="Организация" />
                                     <Button
                                         icon="sap-icon://search"
@@ -123,7 +125,7 @@
                             </VBox>
                             <VBox class="sapUiSmallMarginBegin" width="90%">
                                 <Input
-                                    value="{selectedData>/selectedIncotermText}"
+                                    value="{data>/selectedIncotermText}"
                                     placeholder="Организация"
                                     enabled="false" />
                             </VBox>
@@ -184,8 +186,8 @@
                         <VBox class="">
                             <Label text="Фамилия" required="false" />
                             <Input
-                                value="{model>lastName}"
-                                enabled="false"
+                                value="{data>/lastName}"
+                                enabled="{= ${data>/userType} === 1 }"
                                 placeholder="Фамилия" />
                         </VBox>
 
@@ -194,7 +196,7 @@
                             <Label text="Имя" required="false" />
                             <Input
                                 value="{model>firstName}"
-                                enabled="false"
+                                enabled="{= ${data>/userType} === 1 }"
                                 placeholder="Имя" />
                         </VBox>
 
@@ -203,7 +205,7 @@
                             <Label text="Отчество" required="false" />
                             <Input
                                 value="{model>middleName}"
-                                enabled="false"
+                                enabled="{= ${data>/userType} === 1 }"
                                 placeholder="Отчество" />
                         </VBox>
 
@@ -212,7 +214,7 @@
                             <Label text="Отдел" required="false" />
                             <Input
                                 value="{model>department}"
-                                enabled="false"
+                                enabled="{= ${data>/userType} === 1 }"
                                 placeholder="Отдел" />
                         </VBox>
 
@@ -221,7 +223,7 @@
                             <Label text="Должность" required="false" />
                             <Input
                                 value="{model>position}"
-                                enabled="false"
+                                enabled="{= ${data>/userType} === 1 }"
                                 placeholder="Должность" />
                         </VBox>
 
@@ -231,7 +233,7 @@
                             <Input
                                 value="{model>email}"
                                 type="Email"
-                                enabled="false"
+                                enabled="{= ${data>/userType} === 1 }"
                                 placeholder="Адрес эл. почты" />
                         </VBox>
                         <!-- Руководитель -->
