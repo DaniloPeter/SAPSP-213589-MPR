@@ -286,7 +286,7 @@
                             class="sapUiSmallMarginTop" />
                     </VBox>
                     <VBox class="sapUiFormResGrid sapUiFormBackgrTranslucent" width="60%">
-                        <Table items="{state>/approval/items}"
+                        <Table items="{data>/purchaserData}"
                             mode="None">
                             <headerToolbar>
                                 <OverflowToolbar>
@@ -294,68 +294,73 @@
                                         <Title text="Согласование" level="H3" />
                                         <ToolbarSpacer />
                                         <Button
+                                            icon="sap-icon://add"
+                                            text="Добавить"
+                                            press="onAddPurchaser"
+                                            type="Transparent" />
+                                        <Button
+                                            icon="sap-icon://send"
+                                            text="Отправить"
+                                            press="onSendPurchaser"
+                                            type="Emphasized" />
+                                        <Button
                                             icon="sap-icon://delete"
-                                            enabled="{data>/table}"
-                                            press="onRemoveRow($event, 'table')" />
+                                            text="Удалить"
+                                            enabled="{data>/hasSelectedRows}"
+                                            press="onRemovePurchaser"
+                                            type="Transparent" />
                                     </content>
                                 </OverflowToolbar>
                             </headerToolbar>
                             <columns>
-                                <!-- Полное имя -->
+                                <!-- ID -->
                                 <Column>
-                                    <Label text="Полное имя" />
+                                    <Label text="ID" />
                                 </Column>
 
-                                <!-- Руководитель -->
+                                <!-- ФИО -->
                                 <Column>
-                                    <Label text="Руков" />
+                                    <Label text="ФИО" />
                                 </Column>
 
-                                <!-- Согласование -->
+                                <!-- Дата начала -->
                                 <Column>
-                                    <Label text="Согласование" />
+                                    <Label text="Дата начала" />
                                 </Column>
 
-                                <!-- Комментарий -->
+                                <!-- Дата окончания -->
                                 <Column>
-                                    <Label text="Комментарий" />
+                                    <Label text="Дата окончания" />
                                 </Column>
 
-                                <!-- Тип согласования -->
+                                <!-- Организация -->
                                 <Column>
-                                    <Label text="ТипСоглас" />
-
+                                    <Label text="Организация" />
                                 </Column>
 
-                                <!-- Функциональное направление -->
+                                <!-- Описание организации -->
                                 <Column>
-                                    <Label text="ФункНапр" />
-
-                                </Column>
-
-                                <!-- БЕ (Бизнес-единица) -->
-                                <Column>
-                                    <Label text="БЕ" />
-                                </Column>
-
-                                <!-- Завод -->
-                                <Column>
-                                    <Label text="Завод" />
-                                </Column>
-
-                                <!-- БизнесРоль -->
-                                <Column>
-                                    <Label text="БизнесРоль" />
-                                </Column>
-
-                                <!-- Дата и время -->
-                                <Column>
-                                    <Label text="Дата Время" />
+                                    <Label text="Описание организации" />
                                 </Column>
                             </columns>
                             <items>
                                 <ColumnListItem>
-                                    <Input />
+                                    <cells>
+                                        <Input value="{data>ID}" />
+                                        <Input value="{data>Text}" />
+                                        <Input
+                                            value="{
+                                                path: 'data>DateFrom',
+                                                formatter: '.formatter.formatDate'
+                                            }" />
+                                        <Input
+                                            value="{
+                                                path: 'data>DateTo',
+                                                formatter: '.formatter.formatDate'
+                                            }" />
+                                        <Input value="{data>Ekorg}" />
+                                        <Input value="{data>Ekotx}" />
+                                    </cells>
                                 </ColumnListItem>
                             </items>
                         </Table>

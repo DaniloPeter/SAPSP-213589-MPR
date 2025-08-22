@@ -99,6 +99,9 @@
       "gp": {
         "type": "sap.ui.model.json.JSONModel"
       },
+      "purchaser": {
+        "type": "sap.ui.model.json.JSONModel"
+      },
       "data": {
         "type": "sap.ui.model.json.JSONModel",
         "settings": {

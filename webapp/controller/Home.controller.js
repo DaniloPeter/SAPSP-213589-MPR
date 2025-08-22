@@ -36,6 +36,10 @@ sap.ui.define(
           },
           { entitySet: "/GPSet", modelName: "gp" },
           {
+            entitySet: "/VHPurchaserSet",
+            modelName: "purchaser",
+          },
+          {
             entitySet: "/VHPaymentTermsSet",
             modelName: "payment",
           },
@@ -51,8 +55,50 @@ sap.ui.define(
           results.forEach((data, index) => {
             this.updateModel(dataConfigs[index].modelName, data);
           });
+
+          // Инициализируем модель данных для формы
+          this.initDataModel();
         } catch (oError) {
           console.error("Error loading data", oError);
+        }
+      },
+
+      initDataModel() {
+        // Создаем модель данных для формы если она не существует
+        if (!this.getModel("data")) {
+          const oDataModel = new sap.ui.model.json.JSONModel({
+            userType: 0,
+            selectedIncotermId: "",
+            selectedIncotermText: "",
+            lastName: "",
+            purchaserData: [],
+          });
+          this.getView().setModel(oDataModel, "data");
+        }
+
+        // Инициализируем данные purchaser в таблицу согласования
+        this.initPurchaserTable();
+      },
+
+      initPurchaserTable() {
+        const purchaserModel = this.getModel("purchaser");
+        if (purchaserModel && purchaserModel.getData()) {
+          const purchaserData = purchaserModel.getData().results || [];
+
+          // Логируем структуру данных для отладки
+          if (purchaserData.length > 0) {
+            console.log("Purchaser data structure:", purchaserData[0]);
+            console.log("DateFrom type:", typeof purchaserData[0].DateFrom);
+            console.log("DateFrom value:", purchaserData[0].DateFrom);
+            console.log("DateTo type:", typeof purchaserData[0].DateTo);
+            console.log("DateTo value:", purchaserData[0].DateTo);
+          }
+
+          const dataModel = this.getModel("data");
+
+          if (dataModel) {
+            dataModel.setProperty("/purchaserData", purchaserData);
+          }
         }
       },
 
@@ -64,7 +110,12 @@ sap.ui.define(
         const model = this.getModel(modelName);
         if (model) {
           model.setData(data);
-          console.log(modelName, data);
+          // console.log(modelName, data);
+
+          // Если обновилась модель purchaser, обновляем таблицу
+          if (modelName === "purchaser") {
+            this.initPurchaserTable();
+          }
         }
       },
 
