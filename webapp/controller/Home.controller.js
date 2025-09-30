@@ -2,9 +2,7 @@ sap.ui.define(
   [
     "com/segezha/form/mpr/controller/Base",
     "sap/m/MessageBox",
-    "sap/m/MessageToast",
     "sap/m/Label",
-    "sap/m/SearchField",
     "sap/ui/table/Column",
     "sap/m/Text",
     "sap/ui/model/Filter",
@@ -13,9 +11,7 @@ sap.ui.define(
   (
     BaseController,
     MessageBox,
-    MessageToast,
     Label,
-    SearchField,
     UIColumn,
     Text,
     Filter,
@@ -254,30 +250,6 @@ sap.ui.define(
         }
       },
 
-      onAddPurchaser: function () {
-        const oDataModel = this.getModel("data");
-        if (!oDataModel) return;
-
-        const newPurchaser = {
-          ID: "NEW_" + Date.now(),
-          Text: "",
-          DateFrom: new Date(),
-          DateTo: new Date(),
-          Ekorg: "",
-          Ekotx: "",
-          isNew: true,
-          __metadata: {
-            type: "Z_MM211_PREQ_MON_SRV.VHPurchaser",
-          },
-        };
-
-        const purchaserData = oDataModel.getProperty("/purchaserData") || [];
-        purchaserData.push(newPurchaser);
-        oDataModel.setProperty("/purchaserData", purchaserData);
-
-        MessageToast.show("Новая запись добавлена");
-      },
-
       onDateFromChange: function (oEvent) {
         const oDatePicker = oEvent.getSource();
         const oBindingContext = oDatePicker.getBindingContext("data");
@@ -354,12 +326,6 @@ sap.ui.define(
           console.error("Error sending purchaser ", oError);
           MessageBox.error("Ошибка при отправке данных: " + oError.message);
         }
-      },
-
-      onRemovePurchaser: function () {
-        MessageBox.information(
-          "Функция удаления будет реализована, когда будет бекэнд :("
-        );
       },
     });
   }

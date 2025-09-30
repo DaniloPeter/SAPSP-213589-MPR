@@ -19,7 +19,9 @@
 .sapMListTblNavigatedCell {
   border: none;
 }
-
+.sapMLabel {
+  padding: 0 0.625rem;
+}
 .sapMLabelTextWrapper {
   font-weight: bold !important;
 }
@@ -41,11 +43,12 @@
   background-color: #fff;
   border-radius: 0.75rem;
 }
-
+.sapUiFormResGrid > div,
 .sapUiFormResGrid.sapUiFormBackgrSolid,
 .sapUiFormResGrid.sapUiFormBackgrTranslucent {
   background-color: #fff;
   border-radius: 0.75rem;
+  padding: 0;
 }
 
 .sapUiFormResLayout.sapUiFormBackgrSolid,

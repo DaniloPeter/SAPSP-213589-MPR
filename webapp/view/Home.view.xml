@@ -19,46 +19,18 @@
                     <VBox
                         class="sapUiFormResGrid sapUiFormBackgrTranslucent sapUiSmallMarginEnd"
                         width="40%">
-                        <HBox height="40px" justifyContent="SpaceBetween" alignItems="Center">
-                            <Label text="Помощь" />
-                            <Input
-                                value="{
-                                    parts: [
-                                        {path: 'incoterms>/ID'},
-                                        {value: 'ID'}
-                                    ],
-                                    formatter: '.formatter.formatText'
-                                }"
-                                enabled="false"
-                                placeholder="Incoterms Description" />
-
-                            <Input
-                                value="{incoterms>/ID}"
-                                enabled="false"
-                                placeholder="Incoterms ID" />
-
-                            <!-- Для отображения данных Payment Terms -->
-                            <Input
-                                value="{payment>/Text}"
-                                enabled="false"
-                                placeholder="Payment Terms Description" />
-
-                            <Input
-                                value="{payment>/ID}"
-                                enabled="false"
-                                placeholder="Payment Terms ID" />
-                        </HBox>
                         <HBox justifyContent="Start" alignItems="Center">
                             <!-- N° Заявки -->
-                            <VBox class="">
+                            <HBox class=" sapUiSmallMarginEnd" justifyContent="Start"
+                                alignItems="Center">
                                 <Label text="N° Заявки на полномочия" required="false" />
                                 <Input
                                     value="{payment>Text}"
                                     enabled="false"
                                     placeholder="N° Заявки на полномочия" />
-                            </VBox>
+                            </HBox>
                             <!-- Статус -->
-                            <VBox class=" sapUiSmallMarginBegin">
+                            <HBox justifyContent="Start" alignItems="Center">
                                 <Label text="Статус" required="false" />
                                 <Input
                                     value="{
@@ -70,12 +42,11 @@
                                     }"
                                     enabled="false"
                                     placeholder="Автор заявки" />
-                            </VBox>
+                            </HBox>
                         </HBox>
                         <HBox justifyContent="Start" alignItems="End">
-
                             <!-- Автор заявки -->
-                            <VBox class="" width="40%">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="70%">
                                 <Label text="Автор заявки" required="false" />
                                 <Input
                                     value="{
@@ -87,8 +58,8 @@
                                     }"
                                     enabled="false"
                                     placeholder="Автор заявки" />
-                            </VBox>
-                            <VBox class=" sapUiSmallMarginBegin" width="60%">
+                            </HBox>
+                            <VBox class=" sapUiSmallMarginBegin" width="100%">
                                 <Input
                                     value="{incoterm>Text}"
                                     enabled="false"
@@ -98,8 +69,7 @@
                         <HBox justifyContent="Start" alignItems="End">
 
                             <!-- Тип пользователя -->
-                            <VBox class="">
-                                <Label text="Тип пользователя" required="false" />
+                            <HBox justifyContent="Start" alignItems="Center">
                                 <RadioButtonGroup
                                     id="userTypeGroup"
                                     selectedIndex="{data>/userType}"
@@ -108,11 +78,11 @@
                                     <RadioButton text="Существующий пользователь" />
                                     <RadioButton text="Новый пользователь" />
                                 </RadioButtonGroup>
-                            </VBox>
+                            </HBox>
                         </HBox>
                         <!-- Организация  -->
                         <HBox justifyContent="Start" alignItems="End">
-                            <VBox class="">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="70%">
                                 <Label text="Организация" required="false" />
                                 <HBox class="">
                                     <Input
@@ -122,8 +92,8 @@
                                         icon="sap-icon://search"
                                         press="onSearchOrganization" />
                                 </HBox>
-                            </VBox>
-                            <VBox class="sapUiSmallMarginBegin" width="90%">
+                            </HBox>
+                            <VBox class="sapUiSmallMarginBegin" width="100%">
                                 <Input
                                     value="{data>/selectedIncotermText}"
                                     placeholder="Организация"
@@ -132,7 +102,7 @@
                         </HBox>
                         <!-- Завод -->
                         <HBox justifyContent="Start" alignItems="End">
-                            <VBox class="">
+                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="70%">
                                 <Label text="Завод" required="false" />
                                 <HBox>
                                     <Input
@@ -142,19 +112,19 @@
                                         icon="sap-icon://search"
                                         press="onSearchPlant" />
                                 </HBox>
-                            </VBox>
-                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                            </HBox>
+                            <VBox class=" sapUiSmallMarginBegin" width="100%">
                                 <Input
                                     value="{model>plant}"
                                     placeholder="Завод"
                                     enabled="false" />
                             </VBox>
                         </HBox>
-                        <HBox justifyContent="Start" alignItems="End">
+                        <HBox justifyContent="SpaceBetween" alignItems="Center">
 
                             <!-- Период -->
+                            <Label text="Период" required="false" />
                             <VBox class="" width="100%">
-                                <Label text="Период" required="false" />
                                 <DateRangeSelection
                                     displayFormat="dd.MM.yyyy"
                                     class="" />
@@ -286,68 +256,65 @@
                             class="sapUiSmallMarginTop" />
                     </VBox>
                     <VBox class="sapUiFormResGrid sapUiFormBackgrTranslucent" width="60%">
-                        <Table items="{data>/purchaserData}"
+                        <Table items="{SoglasTable>/0}"
                             mode="None">
                             <headerToolbar>
                                 <OverflowToolbar>
                                     <content>
                                         <Title text="Согласование" level="H3" />
-                                        <ToolbarSpacer />
-                                        <Button
-                                            icon="sap-icon://add"
-                                            press="onAddPurchaser"
-                                            type="Transparent" />
-                                        <Button
-                                            icon="sap-icon://delete"
-                                            enabled="{data>/hasSelectedRows}"
-                                            press="onRemovePurchaser"
-                                            type="Transparent" />
-                                        <Button
-                                            icon="sap-icon://back-to-top"
-                                            press="onSendPurchaser"
-                                            type="Emphasized" />
                                     </content>
                                 </OverflowToolbar>
                             </headerToolbar>
                             <columns>
-                                <!-- ID -->
                                 <Column>
-                                    <Label text="ID" />
+                                    <Label text="Полное имя" />
                                 </Column>
-
-                                <!-- ФИО -->
                                 <Column>
-                                    <Label text="ФИО" />
+                                    <Label text="Рук" />
                                 </Column>
-
-                                <!-- Дата начала -->
                                 <Column>
-                                    <Label text="Дата начала" />
+                                    <Label text="Согласование" />
                                 </Column>
-
-                                <!-- Дата окончания -->
                                 <Column>
-                                    <Label text="Дата окончания" />
+                                    <Label text="Комментарий" />
                                 </Column>
-
-                                <!-- Организация -->
                                 <Column>
-                                    <Label text="Организация" />
+                                    <Label text="Тип согласования" />
                                 </Column>
-
-                                <!-- Описание организации -->
                                 <Column>
-                                    <Label text="Описание организации" />
+                                    <Label text="ФункНапр" />
+                                </Column>
+                                <Column>
+                                    <Label text="БЕ" />
+                                </Column>
+                                <Column>
+                                    <Label text="Завод" />
+                                </Column>
+                                <Column>
+                                    <Label text="БизнесРоль" />
+                                </Column>
+                                <Column>
+                                    <Label text="Дата" />
+                                </Column>
+                                <Column>
+                                    <Label text="Время" />
                                 </Column>
                             </columns>
                             <items>
                                 <ColumnListItem>
                                     <cells>
-                                        <Input value="{data>ID}" />
-                                        <Input value="{data>Text}" />
+                                        <Text value="{SoglasTable>/Fio}" />
+                                        <Text value="{data>Rukov}" />
+                                        <Text value="{data>Soglas}" />
+                                        <Text value="{data>Comment}" />
+                                        <Text value="{data>SoglasType}" />
+                                        <Text value="{data>FuncNapr}" />
+                                        <Text value="{data>BE}" />
+                                        <Text value="{data>Zavod}" />
+                                        <Text value="{data>BuisnesRol}" />
                                         <DatePicker
                                             value="{
-                                                'path':'data>DateFrom',
+                                                'path':'data>Date',
                                                 'type':'sap.ui.model.type.Date',
                                                 'formatOptions': {
                                                     'pattern': 'dd.MM.yyyy'
@@ -355,18 +322,10 @@
                                             }"
                                             change=".onDateFromChange"
                                             valueFormat="yyyy-MM-dd" />
-                                        <DatePicker
-                                            value="{
-                                                'path':'data>DateTo',
-                                                'type':'sap.ui.model.type.Date',
-                                                'formatOptions': {
-                                                    'pattern': 'dd.MM.yyyy'
-                                                }
-                                            }"
-                                            change=".onDateFromChange"
-                                            valueFormat="yyyy-MM-dd" />
-                                        <Input value="{data>Ekorg}" />
-                                        <Input value="{data>Ekotx}" />
+                                        <TimePicker
+                                            value="{data>Time}"
+                                            valueFormat="HH:mm"
+                                            displayFormat="HH:mm" />
                                     </cells>
                                 </ColumnListItem>
                             </items>

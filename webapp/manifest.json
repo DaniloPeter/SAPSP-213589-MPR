@@ -110,6 +110,24 @@
           "lastName": "",
           "userType": 0
         }
+      },
+      "SoglasTable": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "0": {
+            "Fio": "test Data",
+            "Rukov": "test Data",
+            "Soglas": "test Data",
+            "Comment": "test Data",
+            "SoglasType": "test Data",
+            "FuncNapr": "test Data",
+            "BE": "test Data",
+            "Zavod": "test Data",
+            "BuisnesRol": "test Data",
+            "Date": "29.08.2024",
+            "Time": "12.23"
+          }
+        }
       }
     },
     "resources": {
