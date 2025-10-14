@@ -10,7 +10,7 @@
     },
     "dataSources": {
       "odata": {
-        "uri": "/sap/opu/odata/sap/Z_MM211_PREQ_MON_SRV/",
+        "uri": "/sap/opu/odata/sap/ZBC_REQUEST_ROLE_SRV/",
         "type": "OData",
         "settings": {
           "odataVersion": "2.0",
@@ -86,47 +86,59 @@
           "defaultCountMode": "InlineRepeat",
           "useBatch": true,
           "headers": {
-            "Accept": "application/json"
+            "Accept": "application/atom+xml,application/atomsvc+xml,application/json"
           }
         }
       },
-      "incoterms": {
-        "type": "sap.ui.model.json.JSONModel"
-      },
-      "payment": {
-        "type": "sap.ui.model.json.JSONModel"
-      },
-      "gp": {
-        "type": "sap.ui.model.json.JSONModel"
-      },
-      "purchaser": {
-        "type": "sap.ui.model.json.JSONModel"
-      },
-      "data": {
+      "Request_data": {
         "type": "sap.ui.model.json.JSONModel",
         "settings": {
-          "selectedIncotermId": "",
-          "selectedIncotermText": "",
-          "lastName": "",
-          "userType": 0
+          "RRequest": "0",
+          "Status": "черновик",
+          "Login": "testLogin",
+          "NewUser": false,
+          "Bname": "textBname",
+          "McNamelas": "testMcNamelas",
+          "McNamefir": "testMcNamefir",
+          "Namemiddle": "testNamemiddle",
+          "Department": "testDepartment",
+          "Function": "testFunction",
+          "SmtpAddr": "testSmtpAddr@segezha",
+          "Leader": "testLeader",
+          "UserCopy": "testUserCopy",
+          "Bukrs": "1000",
+          "Werks": "1111",
+          "Statu": "Тестовая заявка",
+          "LoginName": "testLoginName",
+          "LeaderName": "testLeaderName",
+          "UserCopyName": "testUserCopyName",
+          "Butxt": "test Butxt",
+          "Name1": "test Name1",
+          "CuserName": "testCuserName",
+          "UuserName": "testUuserName",
+          "LuserName": "testLuserName",
+          "VuserName": "testVuserName",
+          "Active": true,
+          "LeaderExt": false,
+          "CommentExt": "testCommentExt"
         }
       },
-      "SoglasTable": {
+      "VHbukrs": {
         "type": "sap.ui.model.json.JSONModel",
         "settings": {
-          "0": {
-            "Fio": "test Data",
-            "Rukov": "test Data",
-            "Soglas": "test Data",
-            "Comment": "test Data",
-            "SoglasType": "test Data",
-            "FuncNapr": "test Data",
-            "BE": "test Data",
-            "Zavod": "test Data",
-            "BuisnesRol": "test Data",
-            "Date": "29.08.2024",
-            "Time": "12.23"
-          }
+          "items": []
+        }
+      },
+      "VHWerks": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "items": []
+        }
+      },
+      "VHuser": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "items": []
         }
       }
     },

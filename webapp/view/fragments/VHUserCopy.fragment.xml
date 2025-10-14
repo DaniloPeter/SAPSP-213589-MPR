@@ -1,0 +1,60 @@
+<core:FragmentDefinition
+    xmlns="sap.ui.comp.valuehelpdialog"
+    xmlns:m="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core">
+    <ValueHelpDialog
+        title="Справочник пользователей для копии"
+        supportMultiselect="false"
+        ok=".onUserCopyOkPress"
+        cancel=".onUserCopyCancelPress"
+        supportRanges="false"
+        key="Bname"
+        descriptionKey="McNamelas">
+        <filterBar>
+            <fb:FilterBar advancedMode="true" search=".onFilterBarSearchUserCopy">
+                <fb:filterGroupItems>
+                    <fb:FilterGroupItem
+                        groupName="USERCOPY"
+                        name="Bname"
+                        label="Пользователь"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Bname" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        groupName="USERCOPY"
+                        name="McNamelas"
+                        label="Фамилия"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="McNamelas" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        groupName="USERCOPY"
+                        name="McNamefir"
+                        label="Имя"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="McNamefir" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+
+                    <fb:FilterGroupItem
+                        groupName="USERCOPY"
+                        name="Department"
+                        label="Отдел"
+                        visibleInFilterBar="true">
+                        <fb:control>
+                            <m:Input name="Department" />
+                        </fb:control>
+                    </fb:FilterGroupItem>
+                </fb:filterGroupItems>
+            </fb:FilterBar>
+        </filterBar>
+    </ValueHelpDialog>
+</core:FragmentDefinition>

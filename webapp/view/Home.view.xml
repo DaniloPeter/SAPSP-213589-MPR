@@ -19,244 +19,273 @@
                     <VBox
                         class="sapUiFormResGrid sapUiFormBackgrTranslucent sapUiSmallMarginEnd"
                         width="40%">
+                        <!-- N° Заявки -->
                         <HBox justifyContent="Start" alignItems="Center">
-                            <!-- N° Заявки -->
-                            <HBox class=" sapUiSmallMarginEnd" justifyContent="Start"
-                                alignItems="Center">
+                            <VBox width="25%">
                                 <Label text="N° Заявки на полномочия" required="false" />
+                            </VBox>
+                            <VBox width="25%">
                                 <Input
-                                    value="{payment>Text}"
+                                    value="{Request_data>/RRequest}"
                                     enabled="false"
                                     placeholder="N° Заявки на полномочия" />
-                            </HBox>
+                            </VBox>
                             <!-- Статус -->
-                            <HBox justifyContent="Start" alignItems="Center">
+                            <VBox width="15%">
                                 <Label text="Статус" required="false" />
+                            </VBox>
+                            <VBox width="35%">
                                 <Input
-                                    value="{
-                                        parts: [
-                                            {path: 'Text'},
-                                            {value: 'Text'}
-                                        ],
-                                        formatter: '.formatter.formatText'
-                                    }"
-                                    enabled="false"
-                                    placeholder="Автор заявки" />
-                            </HBox>
-                        </HBox>
-                        <HBox justifyContent="Start" alignItems="End">
-                            <!-- Автор заявки -->
-                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="70%">
-                                <Label text="Автор заявки" required="false" />
-                                <Input
-                                    value="{
-                                        parts: [
-                                            {path: 'ID'},
-                                            {value: 'ID'}
-                                        ],
-                                        formatter: '.formatter.formatText'
-                                    }"
-                                    enabled="false"
-                                    placeholder="Автор заявки" />
-                            </HBox>
-                            <VBox class=" sapUiSmallMarginBegin" width="100%">
-                                <Input
-                                    value="{incoterm>Text}"
+                                    value="{Request_data>/Status}"
                                     enabled="false"
                                     placeholder="Автор заявки" />
                             </VBox>
                         </HBox>
-                        <HBox justifyContent="Start" alignItems="End">
-
-                            <!-- Тип пользователя -->
-                            <HBox justifyContent="Start" alignItems="Center">
-                                <RadioButtonGroup
-                                    id="userTypeGroup"
-                                    selectedIndex="{data>/userType}"
-                                    select=".onUserTypeChange"
-                                    columns="2">
-                                    <RadioButton text="Существующий пользователь" />
-                                    <RadioButton text="Новый пользователь" />
-                                </RadioButtonGroup>
-                            </HBox>
+                        <!-- Автор заявки -->
+                        <HBox justifyContent="Start" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Автор заявки" required="false" />
+                            </VBox>
+                            <VBox width="25%">
+                                <Input
+                                    value="{Request_data>/Login}"
+                                    enabled="false"
+                                    placeholder="Автор заявки" />
+                            </VBox>
+                            <VBox width="50%">
+                                <Input
+                                    value="{Request_data>/Login}"
+                                    enabled="false"
+                                    placeholder="Автор заявки" />
+                            </VBox>
+                        </HBox>
+                        <!-- Тип пользователя -->
+                        <HBox justifyContent="Start" alignItems="Center">
+                            <RadioButtonGroup
+                                id="userTypeGroup"
+                                selectedIndex="{path: 'Request_data>/NewUser', formatter: '.formatter.boolToIndex'}"
+                                select=".onUserTypeChange"
+                                columns="2">
+                                <RadioButton text="Существующий пользователь" />
+                                <RadioButton text="Новый пользователь" />
+                            </RadioButtonGroup>
                         </HBox>
                         <!-- Организация  -->
-                        <HBox justifyContent="Start" alignItems="End">
-                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="70%">
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
                                 <Label text="Организация" required="false" />
-                                <HBox class="">
-                                    <Input
-                                        value="{data>/selectedIncotermId}"
-                                        placeholder="Организация" />
-                                    <Button
-                                        icon="sap-icon://search"
-                                        press="onSearchOrganization" />
-                                </HBox>
-                            </HBox>
-                            <VBox class="sapUiSmallMarginBegin" width="100%">
+                            </VBox>
+                            <HBox width='25%'>
                                 <Input
-                                    value="{data>/selectedIncotermText}"
-                                    placeholder="Организация"
+                                    value="{Request_data>/Bukrs}"
+                                    placeholder="Организация" />
+                                <Button
+                                    icon="sap-icon://search"
+                                    press="onSearchBukrs" />
+                            </HBox>
+                            <VBox width="50%">
+                                <Input
+                                    value="{Request_data>/Butxt}"
+                                    placeholder="Название"
                                     enabled="false" />
                             </VBox>
                         </HBox>
                         <!-- Завод -->
-                        <HBox justifyContent="Start" alignItems="End">
-                            <HBox justifyContent="SpaceBetween" alignItems="Center" width="70%">
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
                                 <Label text="Завод" required="false" />
-                                <HBox>
-                                    <Input
-                                        value="{model>plant}"
-                                        placeholder="Завод" />
-                                    <Button
-                                        icon="sap-icon://search"
-                                        press="onSearchPlant" />
-                                </HBox>
-                            </HBox>
-                            <VBox class=" sapUiSmallMarginBegin" width="100%">
+                            </VBox>
+                            <HBox width="25%">
                                 <Input
-                                    value="{model>plant}"
+                                    value="{Request_data>/Werks}"
+                                    placeholder="Завод" />
+                                <Button
+                                    icon="sap-icon://search"
+                                    press="onSearchWerks" />
+                            </HBox>
+                            <VBox width="50%">
+                                <Input
+                                    value="{Request_data>/Name1}"
                                     placeholder="Завод"
                                     enabled="false" />
                             </VBox>
                         </HBox>
-                        <HBox justifyContent="SpaceBetween" alignItems="Center">
-
-                            <!-- Период -->
-                            <Label text="Период" required="false" />
-                            <VBox class="" width="100%">
+                        <!-- Период -->
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Период" required="false" />
+                            </VBox>
+                            <VBox class="sapMInputBaseCancel" width="75%">
                                 <DateRangeSelection
                                     displayFormat="dd.MM.yyyy"
                                     class="" />
                             </VBox>
-                        </HBox>
-                        <HBox justifyContent="Start" alignItems="End">
 
-                            <!-- Пользователь -->
-                            <VBox class="sapUiSmallMarginTop">
+                        </HBox>
+                        <!-- Пользователь -->
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+
                                 <Label text="Пользователь" required="false" />
-                                <HBox>
-                                    <Input
-                                        value="{model>user}"
-                                        placeholder="Пользователь" />
-                                    <Button
-                                        icon="sap-icon://search"
-                                        press="onSearchUser" />
-                                </HBox>
                             </VBox>
-                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                            <HBox width="25%">
                                 <Input
-                                    value="{model>user}"
+                                    value="{Request_data>/Bname}"
+                                    placeholder="Пользователь" />
+                                <Button
+                                    icon="sap-icon://search"
+                                    press="onSearchUser" />
+                            </HBox>
+                            <VBox width="50%">
+                                <Input
+                                    value="{
+                                    parts: [
+                                        'Request_data>/McNamelas',
+                                        'Request_data>/McNamefir'
+                                    ],
+                                    formatter: '.formatter.combineNames'
+                                }"
                                     placeholder="Пользователь"
                                     enabled="false" />
                             </VBox>
                         </HBox>
-
                         <!-- Фамилия -->
-                        <VBox class="">
-                            <Label text="Фамилия" required="false" />
-                            <Input
-                                value="{data>/lastName}"
-                                enabled="{= ${data>/userType} === 1 }"
-                                placeholder="Фамилия" />
-                        </VBox>
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Фамилия" required="false" />
+                            </VBox>
+                            <VBox width="75%">
+                                <Input
+                                    value="{Request_data>/McNamelas}"
+                                    enabled="{Request_data>/NewUser}"
+                                    placeholder="Фамилия" />
+                            </VBox>
+                        </HBox>
 
                         <!-- Имя -->
-                        <VBox class="">
-                            <Label text="Имя" required="false" />
-                            <Input
-                                value="{model>firstName}"
-                                enabled="{= ${data>/userType} === 1 }"
-                                placeholder="Имя" />
-                        </VBox>
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Имя" required="false" />
+                            </VBox>
+                            <VBox width="75%">
+                                <Input
+                                    value="{Request_data>/McNamefir}"
+                                    enabled="{Request_data>/NewUser}"
+                                    placeholder="Имя" />
+                            </VBox>
+                        </HBox>
 
                         <!-- Отчество -->
-                        <VBox class="">
-                            <Label text="Отчество" required="false" />
-                            <Input
-                                value="{model>middleName}"
-                                enabled="{= ${data>/userType} === 1 }"
-                                placeholder="Отчество" />
-                        </VBox>
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Отчество" required="false" />
+                            </VBox>
+                            <VBox width="75%">
+                                <Input
+                                    value="{Request_data>/McNamemid}"
+                                    enabled="{Request_data>/NewUser}"
+                                    placeholder="Отчество" />
+                            </VBox>
+                        </HBox>
 
                         <!-- Отдел -->
-                        <VBox class="">
-                            <Label text="Отдел" required="false" />
-                            <Input
-                                value="{model>department}"
-                                enabled="{= ${data>/userType} === 1 }"
-                                placeholder="Отдел" />
-                        </VBox>
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Отдел" required="false" />
+                            </VBox>
+                            <VBox width="75%">
+                                <Input
+                                    value="{Request_data>/Department}"
+                                    enabled="{Request_data>/NewUser}"
+                                    placeholder="Отдел" />
+                            </VBox>
+                        </HBox>
 
                         <!-- Должность -->
-                        <VBox class="">
-                            <Label text="Должность" required="false" />
-                            <Input
-                                value="{model>position}"
-                                enabled="{= ${data>/userType} === 1 }"
-                                placeholder="Должность" />
-                        </VBox>
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Должность" required="false" />
+                            </VBox>
+                            <VBox width="75%">
+                                <Input
+                                    value="{Request_data>/Function}"
+                                    enabled="{Request_data>/NewUser}"
+                                    placeholder="Должность" />
+                            </VBox>
+                        </HBox>
 
                         <!-- Адрес эл. почты -->
-                        <VBox class="">
-                            <Label text="Адрес эл. почты" required="false" />
-                            <Input
-                                value="{model>email}"
-                                type="Email"
-                                enabled="{= ${data>/userType} === 1 }"
-                                placeholder="Адрес эл. почты" />
-                        </VBox>
-                        <!-- Руководитель -->
-                        <HBox justifyContent="Start" alignItems="End">
-                            <VBox class="">
-                                <Label text="Руководитель" required="false" />
-                                <HBox>
-                                    <Input
-                                        value="{model>manager}"
-                                        placeholder="Руководитель" />
-                                    <Button
-                                        icon="sap-icon://search"
-                                        press="onSearchManager" />
-                                </HBox>
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Адрес эл. почты" required="false" />
                             </VBox>
-                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                            <VBox width="75%">
                                 <Input
-                                    value="{model>manager}"
+                                    value="{Request_data>/SmtpAddr}"
+                                    type="Email"
+                                    enabled="{Request_data>/NewUser}"
+                                    placeholder="Адрес эл. почты" />
+                            </VBox>
+                        </HBox>
+
+                        <!-- Руководитель -->
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
+                                <Label text="Руководитель" required="false" />
+                            </VBox>
+                            <HBox width="25%">
+                                <Input
+                                    value="{Request_data>/Leader}"
+                                    placeholder="Руководитель" />
+                                <Button
+                                    icon="sap-icon://search"
+                                    press="onSearchLeader" />
+                            </HBox>
+                            <VBox width="50%">
+                                <Input
+                                    value="{Request_data>/LeaderName}"
                                     placeholder="Руководитель"
                                     enabled="false" />
                             </VBox>
                         </HBox>
-                        <HBox justifyContent="Start" alignItems="End">
 
-                            <!-- Скопировать с -->
-                            <VBox class="sapUiSmallMarginTop">
+                        <!-- Скопировать с -->
+                        <HBox justifyContent="Center" alignItems="Center">
+                            <VBox width="25%">
                                 <Label text="Скопировать с" required="false" />
-                                <HBox>
-
-                                    <Input
-                                        value="{model>copyFrom}"
-                                        placeholder="Скопировать с" />
-                                    <Button
-                                        icon="sap-icon://search"
-                                        press="onSearchcopyFrom" />
-                                </HBox>
                             </VBox>
-                            <VBox class=" sapUiSmallMarginBegin" width="90%">
+                            <HBox width="25%">
                                 <Input
-                                    value="{model>copyFrom}"
+                                    value="{Request_data>/UserCopy}"
+                                    placeholder="Скопировать с" />
+                                <Button
+                                    icon="sap-icon://search"
+                                    press="onSearchUserCopy" />
+                            </HBox>
+                            <VBox width="50%">
+                                <Input
+                                    value="{Request_data>/UserCopyName}"
                                     placeholder="Скопировать с"
                                     enabled="false" />
                             </VBox>
                         </HBox>
-                        <!-- Кнопка "Скопировать полномочия" -->
-                        <Button
-                            text="Скопировать полномочия"
-                            press="onCopyPowerOfAttorney"
-                            width="200px"
-                            class="sapUiSmallMarginTop" />
+                        <!-- Кнопки -->
+                        <HBox class="sapUiSmallMarginTop">
+                            <Button
+                                text="Скопировать полномочия"
+                                press="onCopyPowerOfAttorney"
+                                width="200px"
+                                class="sapUiSmallMarginEnd" />
+                            <Button
+                                text="Отправить"
+                                press="onSendRequest"
+                                type="Emphasized"
+                                width="120px"
+                                icon="sap-icon://send" />
+                        </HBox>
                     </VBox>
                     <VBox class="sapUiFormResGrid sapUiFormBackgrTranslucent" width="60%">
-                        <Table items="{SoglasTable>/0}"
+                        <!-- <Table items="{SoglasTable>/0}"
                             mode="None">
                             <headerToolbar>
                                 <OverflowToolbar>
@@ -300,8 +329,8 @@
                                     <Label text="Время" />
                                 </Column>
                             </columns>
-                            <items>
-                                <ColumnListItem>
+                            <items> -->
+                        <!-- <ColumnListItem>
                                     <cells>
                                         <Text value="{SoglasTable>/Fio}" />
                                         <Text value="{data>Rukov}" />
@@ -327,9 +356,9 @@
                                             valueFormat="HH:mm"
                                             displayFormat="HH:mm" />
                                     </cells>
-                                </ColumnListItem>
-                            </items>
-                        </Table>
+                                </ColumnListItem> -->
+                        <!-- </items>
+                        </Table> -->
                     </VBox>
                 </HBox>
                 <VBox class="sapUiSmallMarginBottom sapUiFormResGrid sapUiFormBackgrTranslucent">

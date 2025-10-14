@@ -1,6 +1,6 @@
 sap.ui.define(
-  ["sap/ui/core/UIComponent", "sap/ui/Device", ],
-  (UIComponent, Device, ) => {
+  ["sap/ui/core/UIComponent", "sap/ui/Device"],
+  (UIComponent, Device) => {
     "use strict";
 
     return UIComponent.extend("com.segezha.form.mpr.Component", {
@@ -11,7 +11,6 @@ sap.ui.define(
       init() {
         UIComponent.prototype.init.apply(this, arguments);
         this.getRouter().initialize();
-
       },
 
       getContentDensityClass: function () {
