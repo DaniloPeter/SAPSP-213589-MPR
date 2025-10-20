@@ -9,7 +9,6 @@ sap.ui.define([], () => {
       return iIndex === 1;
     },
     combineNames: function (mcName, testMcName) {
-      debugger;
       return mcName + " " + testMcName;
     },
   };
