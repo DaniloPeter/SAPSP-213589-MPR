@@ -23,6 +23,33 @@ sap.ui.define(
       _bAutoFilterApplied: false,
 
       async onInit() {
+        const oRequestModel = this.getModel("Request_data");
+        debugger;
+        if (oRequestModel) {
+          const oData = oRequestModel.getData();
+
+          if (
+            oData.DataFrom === undefined ||
+            oData.DataFrom === null ||
+            oData.DataFrom === ""
+          ) {
+            const oToday = new Date();
+            oToday.setHours(0, 0, 0, 0);
+            oRequestModel.setProperty("/DataFrom", oToday);
+          }
+
+          if (
+            oData.DataTo === undefined ||
+            oData.DataTo === null ||
+            oData.DataTo === ""
+          ) {
+            const oMaxDate = new Date(9999, 11, 31);
+            oRequestModel.setProperty("/DataTo", oMaxDate);
+          }
+
+          // Обновляем модель
+          oRequestModel.refresh();
+        }
         const loadVH = async (sEntitySet, sModelName) => {
           try {
             const oData = await this.readOData(`/${sEntitySet}`);

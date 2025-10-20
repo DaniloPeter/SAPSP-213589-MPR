@@ -117,10 +117,28 @@
                             </VBox>
                             <VBox class="sapMInputBaseCancel" width="75%">
                                 <DateRangeSelection
+                                    id="dateRangeSelectionId"
                                     displayFormat="dd.MM.yyyy"
-                                    class="" />
+                                    value="{
+                                    type: 'sap.ui.model.type.DateInterval',
+                                    formatOptions: {
+                                        pattern: 'dd.MM.yyyy', 
+                                        separator: '/'
+                                    },
+                                    parts: [
+                                        {
+                                            path: 'Request_data>/DataFrom',
+                                            type: 'sap.ui.model.type.Date',
+                                            formatOptions: { pattern: 'dd.MM.yyyy' }
+                                        },
+                                        {
+                                            path: 'Request_data>/DataTo',
+                                            type: 'sap.ui.model.type.Date',
+                                            formatOptions: { pattern: 'dd.MM.yyyy' }
+                                        }
+                                    ]
+                                }" />
                             </VBox>
-
                         </HBox>
                         <!-- Пользователь -->
                         <HBox justifyContent="Center" alignItems="Center">
@@ -130,7 +148,7 @@
                             </VBox>
                             <HBox width="25%">
                                 <Input
-                                    value="{Request_data>/Bname}"
+                                    value="{Request_data>/Bname/Bname}"
                                     placeholder="Пользователь" />
                                 <Button
                                     icon="sap-icon://search"

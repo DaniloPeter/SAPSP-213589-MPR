@@ -2,12 +2,6 @@ sap.ui.define([], () => {
   "use strict";
 
   return {
-    formatText(sValue, sPath) {
-      if (!sValue) {
-        return "";
-      }
-      return `(Данные из (${sPath}) - ${sValue})`;
-    },
     boolToIndex: function (bValue) {
       return bValue ? 1 : 0;
     },

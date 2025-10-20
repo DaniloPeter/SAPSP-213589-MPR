@@ -100,6 +100,8 @@
           "Bname": "textBname",
           "McNamelas": "testMcNamelas",
           "McNamefir": "testMcNamefir",
+          "DataFrom": "",
+          "DataTo": "",
           "Namemiddle": "testNamemiddle",
           "Department": "testDepartment",
           "Function": "testFunction",
@@ -120,7 +122,8 @@
           "VuserName": "testVuserName",
           "Active": true,
           "LeaderExt": false,
-          "CommentExt": "testCommentExt"
+          "CommentExt": "testCommentExt",
+          "SoglasForm": {}
         }
       },
       "VHbukrs": {
