@@ -123,7 +123,59 @@
           "Active": true,
           "LeaderExt": false,
           "CommentExt": "testCommentExt",
-          "SoglasForm": {}
+          "SoglasForm": {},
+          "Guid": [
+            {
+              "Icon": "",
+              "Guid": "",
+              "Soglas": "",
+              "DataFrom": "12.10.2015",
+              "DataTo": "",
+              "GroupR": "",
+              "GroupName": "GroupNametest",
+              "BRole": "",
+              "BRoleName": "",
+              "TypeSoglas": "",
+              "OrgNum": "",
+              "OrgSet": "",
+              "Kokrs": "",
+              "KokrsName": "",
+              "Bukrs": "",
+              "BukrsName": "",
+              "Erkrs": "",
+              "ErkrsName": "",
+              "Kostl": "",
+              "KostlName": "",
+              "Prctr": "",
+              "PrctrName": "",
+              "Werks": "",
+              "WerksName": "",
+              "Lgort": "",
+              "LgortName": "",
+              "Vkorg": "",
+              "VkorgName": "",
+              "Vstel": "",
+              "VstelName": "",
+              "Ekorg": "",
+              "EkorgName": "",
+              "Ekgrp": "",
+              "EkgrpName": "",
+              "Ingrp": "",
+              "IngrpName": "",
+              "Lgnum": "",
+              "LgnumName": "",
+              "Beber": "",
+              "Matkl": "",
+              "MatklName": "",
+              "Biaut": "",
+              "BiautName": "",
+              "Partn": "",
+              "PartnName": "",
+              "UserCopy": "",
+              "LoginSogl": "",
+              "Message": ""
+            }
+          ]
         }
       },
       "VHbukrs": {
@@ -139,6 +191,24 @@
         }
       },
       "VHuser": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "items": []
+        }
+      },
+      "VHRoleName": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "items": []
+        }
+      },
+      "VHRoleTransaction": {
+        "type": "sap.ui.model.json.JSONModel",
+        "settings": {
+          "items": []
+        }
+      },
+      "VHRoleDescr": {
         "type": "sap.ui.model.json.JSONModel",
         "settings": {
           "items": []

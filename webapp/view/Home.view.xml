@@ -148,7 +148,7 @@
                             </VBox>
                             <HBox width="25%">
                                 <Input
-                                    value="{Request_data>/Bname/Bname}"
+                                    value="{Request_data>/Bname}"
                                     placeholder="Пользователь" />
                                 <Button
                                     icon="sap-icon://search"
@@ -380,13 +380,15 @@
                     </VBox>
                 </HBox>
                 <VBox class="sapUiSmallMarginBottom sapUiFormResGrid sapUiFormBackgrTranslucent">
-                    <Table items="{state>/tables/defect/items}"
+                    <Table id="roleTable" items="{Request_data>/Guid}"
                         mode="MultiSelect">
                         <headerToolbar>
                             <OverflowToolbar>
                                 <content>
                                     <Title text="Запрос полномочий" />
-
+                                    <Button text="Добавить" type="Emphasized" press=".onAddItem" />
+                                    <Button text="Копировать" type="Default" press=".onCopyItem" />
+                                    <Button text="Удалить" type="Reject" press=".onDeleteItem" />
                                 </content>
                             </OverflowToolbar>
                         </headerToolbar>
@@ -394,80 +396,104 @@
                             <!-- Идентификатор -->
                             <Column>
                                 <Label text="Ид." />
-
                             </Column>
-
                             <!-- Начало -->
                             <Column>
                                 <Label text="Начало" required="true" />
                             </Column>
-
                             <!-- Конец -->
                             <Column>
                                 <Label text="Конец" required="true" />
                             </Column>
-
                             <!-- Функциональное направление -->
                             <Column>
                                 <Label text="ФункНапр" />
                             </Column>
-
                             <!-- Наименование -->
                             <Column>
                                 <Label text="Наименован" />
                             </Column>
-
                             <!-- БизнесРоль (код) -->
                             <Column>
                                 <Label text="БизнесРоль" />
-
                             </Column>
-
                             <!-- Наименование бизнес-роли -->
                             <Column>
                                 <Label text="НаименовБР" />
-
                             </Column>
-
                             <!-- 3-д. Имя 1 -->
                             <Column>
                                 <Label text="3-д. Имя 1" />
-
                             </Column>
-
                             <!-- TkN -->
-                            <Column>
+                            <Column width="6rem">
                                 <Label text="TkN" />
-
                             </Column>
-
                             <!-- Назв. -->
                             <Column>
                                 <Label text="Назв." />
-
                             </Column>
-
                             <!-- ПравнРаспр -->
                             <Column>
                                 <Label text="ПравнРаспр" />
-
                             </Column>
-
                             <!-- НаимПра -->
                             <Column>
                                 <Label text="НаимПра" />
-
                             </Column>
-
                             <!-- Пользов. -->
                             <Column>
                                 <Label text="Пользов." />
-
                             </Column>
                         </columns>
                         <items>
                             <ColumnListItem>
-
+                                <cells>
+                                    <Text text="{Request_data>Icon}" />
+                                </cells>
+                                <cells>
+                                    <Input value="{Request_data>DataFrom}" type="Date" />
+                                </cells>
+                                <cells>
+                                    <Input value="{Request_data>DataTo}" type="Date" />
+                                </cells>
+                                <cells>
+                                    <HBox>
+                                        <Input
+                                            value="{Request_data>GroupName}"
+                                            placeholder="Руководитель" />
+                                        <Button
+                                            icon="sap-icon://search"
+                                            press="onSearchLeader" />
+                                    </HBox>
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>BRoleName}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>BRole}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>BRoleName}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>PartnName}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>Kokrs}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>KokrsName}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>Prctr}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>PrctrName}" />
+                                </cells>
+                                <cells>
+                                    <Text text="{Request_data>UserCopy}" />
+                                </cells>
                             </ColumnListItem>
                         </items>
                     </Table>

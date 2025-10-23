@@ -40,6 +40,31 @@ sap.ui.define(
           });
         });
       },
+      setDate: function (oModel) {
+        if (oModel) {
+          const oData = oModel.getData();
+
+          if (
+            oData.DataFrom === undefined ||
+            oData.DataFrom === null ||
+            oData.DataFrom === ""
+          ) {
+            const oToday = new Date();
+            oToday.setHours(0, 0, 0, 0);
+            oModel.setProperty("/DataFrom", oToday);
+          }
+
+          if (
+            oData.DataTo === undefined ||
+            oData.DataTo === null ||
+            oData.DataTo === ""
+          ) {
+            const oMaxDate = new Date(9999, 11, 31);
+            oModel.setProperty("/DataTo", oMaxDate);
+          }
+          oModel.refresh();
+        }
+      },
     });
   }
 );

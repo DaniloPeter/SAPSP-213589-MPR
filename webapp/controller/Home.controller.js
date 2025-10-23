@@ -26,29 +26,8 @@ sap.ui.define(
 
       async onInit() {
         const oRequestModel = this.getModel("Request_data");
-        if (oRequestModel) {
-          const oData = oRequestModel.getData();
+        this.setDate(oRequestModel);
 
-          if (
-            oData.DataFrom === undefined ||
-            oData.DataFrom === null ||
-            oData.DataFrom === ""
-          ) {
-            const oToday = new Date();
-            oToday.setHours(0, 0, 0, 0);
-            oRequestModel.setProperty("/DataFrom", oToday);
-          }
-
-          if (
-            oData.DataTo === undefined ||
-            oData.DataTo === null ||
-            oData.DataTo === ""
-          ) {
-            const oMaxDate = new Date(9999, 11, 31);
-            oRequestModel.setProperty("/DataTo", oMaxDate);
-          }
-          oRequestModel.refresh();
-        }
         const loadVH = async (sEntitySet, sModelName) => {
           try {
             const oData = await this.readOData(`/${sEntitySet}`);
@@ -78,7 +57,163 @@ sap.ui.define(
           loadVH("VHbukrsSet", "VHbukrs"),
           loadVH("VHWerksSet", "VHWerks"),
           loadVH("VHuserSet", "VHuser"),
+          loadVH("VHRoleNameSet", "VHRoleName"),
+          loadVH("VHRoleTransactionSet", "VHRoleTransaction"),
+          loadVH("VHRoleDescrSet", "VHRoleDescr"),
         ]);
+      },
+
+      onAddItem: function () {
+        const oModel = this.getModel("Request_data");
+        if (!oModel) {
+          console.error("Model 'Request_data' not found.");
+          return;
+        }
+
+        const sPathToGuidArray = "/Guid";
+        const aCurrentItems = oModel.getProperty("/Guid") || [];
+
+        const oNewEntry = {
+          Icon: "",
+          Guid: "",
+          Soglas: "",
+          DataFrom: "",
+          DataTo: "",
+          GroupR: "",
+          GroupName: "",
+          BRole: "",
+          BRoleName: "",
+          TypeSoglas: "",
+          OrgNum: "",
+          OrgSet: "",
+          Kokrs: "",
+          KokrsName: "",
+          Bukrs: "",
+          BukrsName: "",
+          Erkrs: "",
+          ErkrsName: "",
+          Kostl: "",
+          KostlName: "",
+          Prctr: "",
+          PrctrName: "",
+          Werks: "",
+          WerksName: "",
+          Lgort: "",
+          LgortName: "",
+          Vkorg: "",
+          VkorgName: "",
+          Vstel: "",
+          VstelName: "",
+          Ekorg: "",
+          EkorgName: "",
+          Ekgrp: "",
+          EkgrpName: "",
+          Ingrp: "",
+          IngrpName: "",
+          Lgnum: "",
+          LgnumName: "",
+          Beber: "",
+          Matkl: "",
+          MatklName: "",
+          Biaut: "",
+          BiautName: "",
+          Partn: "",
+          PartnName: "",
+          UserCopy: "",
+          LoginSogl: "",
+          Message: "",
+        };
+
+        aCurrentItems.push(oNewEntry);
+
+        oModel.setProperty(sPathToGuidArray, aCurrentItems);
+      },
+
+      onDeleteItem: function () {
+        debugger;
+        const oModel = this.getModel("Request_data");
+        if (!oModel) {
+          console.error("Model 'Request_data' not found.");
+          return;
+        }
+
+        const oTable = this.byId("roleTable");
+        if (!oTable) {
+          console.error("Table 'roleTable' not found.");
+          return;
+        }
+
+        const sPathToGuidArray = "/Guid";
+        let aCurrentItems = oModel.getProperty(sPathToGuidArray) || [];
+
+        const aSelectedContexts = oTable.getSelectedContexts();
+        if (aSelectedContexts.length === 0) {
+          MessageBox.information("Пожалуйста, выберите строки для удаления.");
+          return;
+        }
+
+        const aIndicesToDelete = aSelectedContexts
+          .map(function (oContext) {
+            const sPath = oContext.getPath();
+            const aPathParts = sPath.split("/");
+            return parseInt(aPathParts[aPathParts.length - 1], 10);
+          })
+          .sort(function (a, b) {
+            return b - a;
+          });
+
+        aIndicesToDelete.forEach(function (iIndex) {
+          if (iIndex >= 0 && iIndex < aCurrentItems.length) {
+            aCurrentItems.splice(iIndex, 1);
+          }
+        });
+
+        oModel.setProperty(sPathToGuidArray, aCurrentItems);
+
+        oTable.removeSelections();
+      },
+
+      onCopyItem: function () {
+        debugger;
+        const oModel = this.getModel("Request_data");
+        if (!oModel) {
+          console.error("Model 'Request_data' not found.");
+          return;
+        }
+
+        const oTable = this.byId("roleTable");
+        if (!oTable) {
+          console.error("Table 'roleTable' not found.");
+          return;
+        }
+
+        const sPathToGuidArray = "/Guid";
+        const aCurrentItems = oModel.getProperty(sPathToGuidArray) || [];
+
+        const aSelectedContexts = oTable.getSelectedContexts();
+        if (aSelectedContexts.length === 0) {
+          MessageBox.information(
+            "Пожалуйста, выберите строки для копирования."
+          );
+          return;
+        }
+
+        if (aSelectedContexts.length !== 1) {
+          MessageBox.warning(
+            "Пожалуйста, выберите только одну строку для копирования."
+          );
+          return;
+        }
+
+        const oSelectedItemContext = aSelectedContexts[0];
+        const oItemToCopy = oSelectedItemContext.getObject();
+
+        const oCopiedItem = JSON.parse(JSON.stringify(oItemToCopy));
+        oCopiedItem.Guid = "";
+
+        aCurrentItems.push(oCopiedItem);
+
+        oModel.setProperty(sPathToGuidArray, aCurrentItems);
       },
 
       onSearchBukrs: async function () {
@@ -137,13 +272,11 @@ sap.ui.define(
               oRequestModel.setProperty("/Name1", oSelectedData.Name1);
               oRequestModel.setProperty("/Ort01", oSelectedData.Ort01);
               oRequestModel.setProperty("/Land1", oSelectedData.Land1);
-              // Обновляем BU, если изменилось
               if (
                 oSelectedData.Bukrs &&
                 oSelectedData.Bukrs !== oRequestModel.getProperty("/Bukrs")
               ) {
                 oRequestModel.setProperty("/Bukrs", oSelectedData.Bukrs);
-                // Ищем BU текст в JSON модели
                 const oVHBukrsModel =
                   this.getModel("VHbukrs") ||
                   this.getOwnerComponent().getModel("VHbukrs");
@@ -166,12 +299,11 @@ sap.ui.define(
       onSearchUser: async function () {
         const config = {
           id: "user",
-          modelName: "VHuser", // Имя JSON-модели
+          modelName: "VHuser",
           title: "Справочник пользователей",
           keyPath: "Bname",
-          descriptionPath: "McNamelas", // или комбинация
+          descriptionPath: "McNamelas",
           displayFields: [
-            // Массив объектов {name, label}
             { name: "Bname", label: "Пользователь" },
             { name: "McNamelas", label: "Фамилия" },
             { name: "McNamefir", label: "Имя" },
@@ -197,12 +329,11 @@ sap.ui.define(
       onSearchLeader: async function () {
         const config = {
           id: "leader",
-          modelName: "VHuser", // Используем ту же JSON-модель
+          modelName: "VHuser",
           title: "Справочник руководителей",
           keyPath: "Bname",
           descriptionPath: "McNamelas",
           displayFields: [
-            // Массив объектов {name, label}
             { name: "Bname", label: "Пользователь" },
             { name: "McNamelas", label: "Фамилия" },
             { name: "McNamefir", label: "Имя" },
@@ -226,12 +357,11 @@ sap.ui.define(
       onSearchUserCopy: async function () {
         const config = {
           id: "userCopy",
-          modelName: "VHuser", // Используем ту же JSON-модель
+          modelName: "VHuser",
           title: "Справочник пользователей для копии",
           keyPath: "Bname",
           descriptionPath: "McNamelas",
           displayFields: [
-            // Массив объектов {name, label}
             { name: "Bname", label: "Пользователь" },
             { name: "McNamelas", label: "Фамилия" },
             { name: "McNamefir", label: "Имя" },
