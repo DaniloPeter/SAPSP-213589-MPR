@@ -1,0 +1,74 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:fb="sap.ui.comp.filterbar"
+    xmlns:core="sap.ui.core">
+    <Dialog id="bRoleSearchDialog" title="Поиск бизнес-ролей" contentHeight="75%" contentWidth="75%">
+        <content>
+            <IconTabBar id="bRoleIconTabBar" expanded="true" stretchContentHeight="true">
+                <items>
+                    <!-- Вкладка для VHRoleName -->
+                    <IconTabFilter id="tabVHRoleName" text="По наименованию">
+                        <content>
+                            <VBox>
+                                <fb:FilterBar id="filterBarVHRoleName" advancedMode="true"
+                                    search=".onBRoleSearchVHRoleName">
+                                    <!-- FilterGroupItems будут добавлены динамически -->
+                                </fb:FilterBar>
+                                <Table
+                                    id="tableVHRoleName"
+                                    growing="true"
+                                    growingThreshold="20"
+                                    growingScrollToLoad="true"
+                                    mode="SingleSelectMaster">
+                                    <!-- Столбцы и строки будут добавлены динамически -->
+                                </Table>
+                            </VBox>
+                        </content>
+                    </IconTabFilter>
+                    <!-- Вкладка для VHRoleTransaction -->
+                    <IconTabFilter id="tabVHRoleTransaction" text="По транзакции">
+                        <content>
+                            <VBox>
+                                <fb:FilterBar id="filterBarVHRoleTransaction" advancedMode="true"
+                                    search=".onBRoleSearchVHRoleTransaction">
+                                    <!-- FilterGroupItems будут добавлены динамически -->
+                                </fb:FilterBar>
+                                <Table
+                                    id="tableVHRoleTransaction"
+                                    growing="true"
+                                    growingThreshold="20"
+                                    growingScrollToLoad="true"
+                                    mode="SingleSelectMaster">
+                                    <!-- Столбцы и строки будут добавлены динамически -->
+                                </Table>
+                            </VBox>
+                        </content>
+                    </IconTabFilter>
+                    <!-- Вкладка для VHRoleDescr -->
+                    <IconTabFilter id="tabVHRoleDescr" text="По описанию">
+                        <content>
+                            <VBox>
+                                <fb:FilterBar id="filterBarVHRoleDescr" advancedMode="true"
+                                    search=".onBRoleSearchVHRoleDescr">
+                                    <!-- FilterGroupItems будут добавлены динамически -->
+                                </fb:FilterBar>
+                                <Table
+                                    id="tableVHRoleDescr"
+                                    growing="true"
+                                    growingThreshold="20"
+                                    growingScrollToLoad="true"
+                                    mode="SingleSelectMaster">
+                                    <!-- Столбцы и строки будут добавлены динамически -->
+                                </Table>
+                            </VBox>
+                        </content>
+                    </IconTabFilter>
+                </items>
+            </IconTabBar>
+        </content>
+        <buttons>
+            <Button text="ОК" press=".onBRoleOkPress" type="Emphasized" />
+            <Button text="Отмена" press=".onBRoleCancelPress" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

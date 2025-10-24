@@ -460,18 +460,25 @@
                                 <cells>
                                     <HBox>
                                         <Input
-                                            value="{Request_data>GroupName}"
-                                            placeholder="Руководитель" />
+                                            value="{Request_data>GroupR}"
+                                            placeholder="Функ Напр" />
                                         <Button
                                             icon="sap-icon://search"
-                                            press="onSearchLeader" />
+                                            press="onSearchGroup" />
                                     </HBox>
                                 </cells>
                                 <cells>
-                                    <Text text="{Request_data>BRoleName}" />
+                                    <Input value="{Request_data>GroupName}" enabled="false" />
                                 </cells>
                                 <cells>
-                                    <Text text="{Request_data>BRole}" />
+                                    <HBox>
+                                        <Input
+                                            value="{Request_data>BRole}"
+                                            placeholder="БизнесРоль" />
+                                        <Button
+                                            icon="sap-icon://search"
+                                            press="onSearchBRole" />
+                                    </HBox>
                                 </cells>
                                 <cells>
                                     <Text text="{Request_data>BRoleName}" />

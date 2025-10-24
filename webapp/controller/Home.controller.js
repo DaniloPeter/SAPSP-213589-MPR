@@ -8,6 +8,7 @@ sap.ui.define(
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
     "com/segezha/form/mpr/utils/ValueHelpHandler",
+    "com/segezha/form/mpr/utils/BRoleValueHelpHandler",
   ],
   (
     BaseController,
@@ -17,7 +18,8 @@ sap.ui.define(
     Text,
     Filter,
     FilterOperator,
-    ValueHelpHandler
+    ValueHelpHandler,
+    BRoleValueHelpHandler
   ) => {
     "use strict";
 
@@ -214,6 +216,42 @@ sap.ui.define(
         aCurrentItems.push(oCopiedItem);
 
         oModel.setProperty(sPathToGuidArray, aCurrentItems);
+      },
+
+      onSearchBRole: async function (oEvent) {
+        const oButton = oEvent.getSource();
+        const oListItem = oButton.getParent();
+        if (!oListItem) {
+          console.error("Button is not inside a ColumnListItem.");
+          MessageBox.error("Ошибка: Не удалось определить строку таблицы.");
+          return;
+        }
+
+        const oContext = oListItem.getBindingContext("Request_data");
+        if (!oContext) {
+          console.error("Binding context not found for the list item.");
+          MessageBox.error("Ошибка: Не найден контекст данных для строки.");
+          return;
+        }
+
+        const sSelectedPath = oContext.getPath();
+        console.log("Path to selected row:", sSelectedPath);
+
+        const aPathParts = sSelectedPath.split("/");
+        const iSelectedIndex = parseInt(aPathParts[aPathParts.length - 1], 10);
+
+        if (isNaN(iSelectedIndex)) {
+          console.error("Could not parse index from path:", sSelectedPath);
+          MessageBox.error(
+            "Ошибка: Не удалось определить строку для редактирования."
+          );
+          return;
+        }
+
+        console.log("Index of selected row in Guid array:", iSelectedIndex);
+
+        // Вызов обработчика с контроллером и индексом
+        await BRoleValueHelpHandler.openValueHelp(this, iSelectedIndex);
       },
 
       onSearchBukrs: async function () {
