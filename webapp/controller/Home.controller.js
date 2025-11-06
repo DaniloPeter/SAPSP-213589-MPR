@@ -63,6 +63,52 @@ sap.ui.define(
           loadVH("VHRoleTransactionSet", "VHRoleTransaction"),
           loadVH("VHRoleDescrSet", "VHRoleDescr"),
         ]);
+
+        const onReadOrgLevel = async (sGroupR, sOrgNum) => {
+          debugger;
+          try {
+            const oModel = this.getOwnerComponent().getModel();
+            if (!oModel) {
+              MessageBox.error("OData модель не найдена");
+              return;
+            }
+
+            const aFilters = [];
+            if (sGroupR) {
+              aFilters.push(new Filter("GroupR", FilterOperator.EQ, sGroupR));
+            }
+            if (sOrgNum) {
+              aFilters.push(new Filter("OrgNum", FilterOperator.EQ, sOrgNum));
+            }
+
+            const oData = await new Promise((resolve, reject) => {
+              oModel.read("/OrgLevelSet", {
+                filters: aFilters,
+                success: function (oData) {
+                  resolve(oData);
+                },
+                error: function (oError) {
+                  reject(oError);
+                },
+              });
+            });
+
+            const aResults = oData?.results || [];
+            console.log("Результаты OrgLevelSet:", aResults);
+
+            const oOrgLevelModel = new sap.ui.model.json.JSONModel({
+              items: aResults,
+            });
+            this.getView().setModel(oOrgLevelModel, "OrgLevelModel");
+
+            MessageBox.success(`Загружено записей: ${aResults.length}`);
+          } catch (error) {
+            console.error("Ошибка при чтении OrgLevelSet:", error);
+            MessageBox.error("Ошибка при получении данных OrgLevelSet");
+          }
+        };
+
+        const result = onReadOrgLevel("BDG", "16");
       },
 
       onAddItem: function () {

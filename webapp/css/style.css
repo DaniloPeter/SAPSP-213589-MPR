@@ -60,3 +60,7 @@
 /* .sapMInputBase {
   padding-left: 1%;
 } */
+
+.sapMFlexBox.sapMVBox.sapMFlexBoxJustifyStart.sapMFlexBoxAlignItemsStretch.sapMFlexBoxWrapNoWrap.sapMFlexBoxAlignContentStretch.sapMFlexBoxBGTransparent {
+  background-color: white;
+}
