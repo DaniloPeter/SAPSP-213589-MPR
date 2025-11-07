@@ -27,88 +27,100 @@ sap.ui.define(
       _bAutoFilterApplied: false,
 
       async onInit() {
-        const oRequestModel = this.getModel("Request_data");
-        this.setDate(oRequestModel);
+        const oPage = this.byId("homePageId") || this.getView();
+        oPage.setBusyIndicatorDelay(0);
+        oPage.setBusy(true);
+        try {
+          const oRequestModel = this.getModel("Request_data");
+          this.setDate(oRequestModel);
 
-        const loadVH = async (sEntitySet, sModelName) => {
-          try {
-            const oData = await this.readOData(`/${sEntitySet}`);
-            const aResults = (oData && oData.results) || [];
-            const oModel = this.getModel(sModelName);
-            if (oModel) {
-              oModel.setProperty("/items", aResults);
-            } else {
-              this.getOwnerComponent().setModel(
-                new sap.ui.model.json.JSONModel({ items: aResults }),
-                sModelName
-              );
+          const loadVH = async (sEntitySet, sModelName) => {
+            try {
+              const oData = await this.readOData(`/${sEntitySet}`);
+              const aResults = (oData && oData.results) || [];
+              const oModel = this.getModel(sModelName);
+              if (oModel) {
+                oModel.setProperty("/items", aResults);
+              } else {
+                this.getOwnerComponent().setModel(
+                  new sap.ui.model.json.JSONModel({ items: aResults }),
+                  sModelName
+                );
+              }
+              console.info(`${sEntitySet} loaded:`, aResults.length);
+            } catch (e) {
+              console.warn(`Failed to load ${sEntitySet}:`, e);
+              const oModel =
+                this.getModel(sModelName) ||
+                this.getOwnerComponent().getModel(sModelName);
+              if (oModel) {
+                oModel.setProperty("/items", []);
+              }
             }
-            console.info(`${sEntitySet} loaded:`, aResults.length);
-          } catch (e) {
-            console.warn(`Failed to load ${sEntitySet}:`, e);
-            const oModel =
-              this.getModel(sModelName) ||
-              this.getOwnerComponent().getModel(sModelName);
-            if (oModel) {
-              oModel.setProperty("/items", []);
-            }
-          }
-        };
+          };
 
-        await Promise.all([
-          loadVH("VHbukrsSet", "VHbukrs"),
-          loadVH("VHWerksSet", "VHWerks"),
-          loadVH("VHuserSet", "VHuser"),
-          loadVH("VHRoleNameSet", "VHRoleName"),
-          loadVH("VHRoleTransactionSet", "VHRoleTransaction"),
-          loadVH("VHRoleDescrSet", "VHRoleDescr"),
-        ]);
+          await Promise.all([
+            loadVH("VHbukrsSet", "VHbukrs"),
+            loadVH("VHWerksSet", "VHWerks"),
+            loadVH("VHuserSet", "VHuser"),
+            loadVH("VHRoleNameSet", "VHRoleName"),
+            loadVH("VHRoleTransactionSet", "VHRoleTransaction"),
+            loadVH("VHRoleDescrSet", "VHRoleDescr"),
+          ]);
 
-        const onReadOrgLevel = async (sGroupR, sOrgNum) => {
-          debugger;
-          try {
-            const oModel = this.getOwnerComponent().getModel();
-            if (!oModel) {
-              MessageBox.error("OData модель не найдена");
-              return;
-            }
+          const onReadOrgLevel = async (sGroupR, sOrgNum) => {
+            try {
+              const oModel = this.getOwnerComponent().getModel();
+              if (!oModel) {
+                MessageBox.error("OData модель не найдена");
+                return;
+              }
 
-            const aFilters = [];
-            if (sGroupR) {
-              aFilters.push(new Filter("GroupR", FilterOperator.EQ, sGroupR));
-            }
-            if (sOrgNum) {
-              aFilters.push(new Filter("OrgNum", FilterOperator.EQ, sOrgNum));
-            }
+              const aFilters = [];
+              if (sGroupR) {
+                aFilters.push(new Filter("GroupR", FilterOperator.EQ, sGroupR));
+              }
+              if (sOrgNum) {
+                aFilters.push(new Filter("OrgNum", FilterOperator.EQ, sOrgNum));
+              }
 
-            const oData = await new Promise((resolve, reject) => {
-              oModel.read("/OrgLevelSet", {
-                filters: aFilters,
-                success: function (oData) {
-                  resolve(oData);
-                },
-                error: function (oError) {
-                  reject(oError);
-                },
+              const oData = await new Promise((resolve, reject) => {
+                oModel.read("/OrgLevelSet", {
+                  filters: aFilters,
+                  success: function (oData) {
+                    resolve(oData);
+                  },
+                  error: function (oError) {
+                    reject(oError);
+                  },
+                });
               });
-            });
 
-            const aResults = oData?.results || [];
-            console.log("Результаты OrgLevelSet:", aResults);
+              const aResults = oData?.results || [];
+              console.log("Результаты OrgLevelSet:", aResults);
 
-            const oOrgLevelModel = new sap.ui.model.json.JSONModel({
-              items: aResults,
-            });
-            this.getView().setModel(oOrgLevelModel, "OrgLevelModel");
+              const oOrgLevelModel = new sap.ui.model.json.JSONModel({
+                items: aResults,
+              });
+              this.getView().setModel(oOrgLevelModel, "OrgLevelModel");
 
-            MessageBox.success(`Загружено записей: ${aResults.length}`);
-          } catch (error) {
-            console.error("Ошибка при чтении OrgLevelSet:", error);
-            MessageBox.error("Ошибка при получении данных OrgLevelSet");
-          }
-        };
+              MessageBox.success(`Загружено записей: ${aResults.length}`);
+            } catch (error) {
+              console.error("Ошибка при чтении OrgLevelSet:", error);
+              MessageBox.error("Ошибка при получении данных OrgLevelSet");
+            }
+          };
 
-        const result = onReadOrgLevel("BDG", "16");
+          await onReadOrgLevel("BDG", "16");
+        } catch (err) {
+          console.error("Ошибка инициализации Home:", err);
+          MessageBox.error(
+            "Ошибка при инициализации страницы. Подробности в консоли."
+          );
+        } finally {
+          // Всегда снимем busy — даже при ошибках
+          oPage.setBusy(false);
+        }
       },
 
       onAddItem: function () {
@@ -125,8 +137,8 @@ sap.ui.define(
           Icon: "",
           Guid: "",
           Soglas: "",
-          DataFrom: "",
-          DataTo: "",
+          DataFrom: new Date().toISOString().split("T")[0],
+          DataTo: "9999-12-31",
           GroupR: "",
           GroupName: "",
           BRole: "",

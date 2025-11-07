@@ -1,6 +1,6 @@
 specVersion: "2.0"
 metadata:
-  name: com.segezha.procurement
+  name: com.segezha.mprform
   copyright: |-
     SEGEZHA
     * (c) Copyright 2023-${currentYear} ООО "SEGEZHA"
@@ -24,9 +24,9 @@ builder:
           password: PASSWORD
         ui5:
           language: RU
-          package: Z_MM_PROCUREMENT
-          bspContainer: ZPROCUREMENT
-          bspContainerText: Procurement
+          package: Z_UX_AUTH_REQ
+          bspContainer: ZAUTH_REQ
+          bspContainerText: Auth_Req
           transportNo: TRANSPORT_NO
           calculateApplicationIndex: true
 server:
